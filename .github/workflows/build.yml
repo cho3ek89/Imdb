@@ -19,11 +19,8 @@ jobs:
         with:
           dotnet-version: '5.0.x'
 
-      - name: Build
-        run: dotnet build Imdb.sln -c 'Release' -v 'normal' -p:Version=1.0.0.0
-
       - name: Publish (Windows 10 x64)
-        run: dotnet publish Imdb.sln -c 'Release' -r 'win10-x64' -v 'normal' --no-build --self-contained true -p:PublishReadyToRun=true -p:PublishReadyToRunShowWarnings=true -p:PublishTrimmed=true -p:TrimMode=Link
+        run: dotnet publish Imdb.sln -c 'Release' -r 'win10-x64' -v 'normal' --self-contained true -p:PublishReadyToRun=true -p:PublishReadyToRunShowWarnings=true -p:PublishTrimmed=true -p:TrimMode=Link
 
       - name: Upload artifacts (Windows 10 x64)
         uses: actions/upload-artifact@v2
