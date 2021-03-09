@@ -7,9 +7,11 @@ on:
     branches: [ master ]
 
 jobs:
-
   build:
     runs-on: windows-latest
+    strategy:
+      matrix:
+        runtime: [linuxmint.18.3-x64, win10-x64]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -19,11 +21,11 @@ jobs:
         with:
           dotnet-version: '5.0.x'
 
-      - name: Publish (Windows 10 x64)
-        run: dotnet publish Imdb.sln -c 'Release' -r 'win10-x64' -v 'normal' --self-contained true -p:PublishReadyToRun=true -p:PublishReadyToRunShowWarnings=true -p:PublishTrimmed=true -p:TrimMode=Link
+      - name: Publish (${{ matrix.runtime }})
+        run: dotnet publish Imdb.sln -c 'Release' -r '${{ matrix.runtime }}' -v 'normal' --self-contained true -p:PublishTrimmed=true -p:TrimMode=Link -p:Version=1.0.0.0
 
-      - name: Upload artifacts (Windows 10 x64)
+      - name: Upload artifacts (${{ matrix.runtime }})
         uses: actions/upload-artifact@v2
         with:
-          name: Imdb.Loader
+          name: Imdb.Loader_${{ matrix.runtime }}
           path: Imdb.Loader/bin/Release/net5.0/win10-x64/publish/
