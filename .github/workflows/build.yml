@@ -24,10 +24,10 @@ jobs:
         with:
           dotnet-version: '5.0.x'
 
-      - name: Build (${{ matrix.runtime }})
-        run: dotnet publish Imdb.sln -c 'Release' -r '${{ matrix.runtime }}' -v 'normal' --self-contained true -p:PublishTrimmed=true -p:TrimMode=Link -p:Version=$version
+      - name: Build
+        run: dotnet publish Imdb.sln -c 'Release' -r '${{ matrix.runtime }}' -v 'normal' --self-contained true -p:PublishTrimmed=true -p:TrimMode=Link
 
-      - name: Upload artifacts (${{ matrix.runtime }})
+      - name: Upload artifacts
         uses: actions/upload-artifact@v2
         with:
           name: Imdb.Loader_${{ matrix.runtime }}_$version
