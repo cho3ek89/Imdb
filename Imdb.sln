@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Imdb.Loader", "Imdb.Loader\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Imdb.Models", "Imdb.Models\Imdb.Models.csproj", "{2E8A837E-75EF-4CCF-8F25-8A717D8678D3}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Imdb", "Imdb\Imdb.csproj", "{BD0065C5-B85B-414E-97C8-5E41A7CF6E73}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{2E8A837E-75EF-4CCF-8F25-8A717D8678D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2E8A837E-75EF-4CCF-8F25-8A717D8678D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2E8A837E-75EF-4CCF-8F25-8A717D8678D3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD0065C5-B85B-414E-97C8-5E41A7CF6E73}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD0065C5-B85B-414E-97C8-5E41A7CF6E73}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD0065C5-B85B-414E-97C8-5E41A7CF6E73}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD0065C5-B85B-414E-97C8-5E41A7CF6E73}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
