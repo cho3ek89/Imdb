@@ -8,7 +8,11 @@
 /Imdb.Loader/obj/
 /Imdb.Models/bin/
 /Imdb.Models/obj/
-/TestResults/
 
 # JS
+/Imdb.WebApp/dist
 /Imdb.WebApp/node_modules
+
+# Additional
+/Databases/
+/Logs/

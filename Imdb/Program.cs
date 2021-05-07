@@ -3,7 +3,6 @@ namespace Imdb
     using Microsoft.AspNetCore.Hosting;
     using Microsoft.Extensions.Hosting;
 
-    using Newtonsoft.Json;
     using Serilog;
 
     public class Program
