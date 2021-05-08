@@ -14,5 +14,6 @@
 /Imdb.WebApp/node_modules
 
 # Additional
+/binaries/
 /Databases/
 /Logs/
