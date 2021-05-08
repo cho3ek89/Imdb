@@ -30,7 +30,7 @@ jobs:
           node-version: '16.x'
 
       - name: Build Imdb
-        run: dotnet publish 'Imdb/Imdb.csproj' -o 'binaries/Imdb' -c 'Release' -r '${{ matrix.runtime }}' -v 'normal' --self-contained true -p:PublishTrimmed=true -p:TrimMode=Link -p:Version=${{ env.version }}
+        run: dotnet publish 'Imdb\Imdb.csproj' -o 'binaries/Imdb' -c 'Release' -r '${{ matrix.runtime }}' -v 'normal' --self-contained true -p:PublishTrimmed=true -p:TrimMode=Link -p:Version=${{ env.version }}
 
       - name: Build Imdb.Loader
         run: dotnet publish 'Imdb.Loader/Imdb.Loader.csproj' -o 'binaries/Imdb.Loader' -c 'Release' -r '${{ matrix.runtime }}' -v 'normal' --self-contained true -p:PublishTrimmed=true -p:TrimMode=Link -p:Version=${{ env.version }}
@@ -44,15 +44,15 @@ jobs:
 
       - name: Update settings
         run: |
-          echo 'Updating database and logging setting of Imdb project.'
+          # Updating database and logging setting of Imdb.Loader project.
           cd binaries/Imdb
           cat appsettings.json | \
-          jq '.ConnectionStrings.Imdb = "Data Source=../Databases/imdb.db3;"' | \
+          jq '.ConnectionStrings.ImDb = "Data Source=../Databases/imdb.db3;"' | \
           jq '.Serilog.MinimumLevel.Default = "Imformation"' | \
           jq '(.Serilog.WriteTo[] | select(.Name == "File") | .Args.path) |= "../Logs/Imdb.txt"' \
           > temp.json && mv temp.json appsettings.json
 
-          echo 'Updating database and logging setting of Imdb project.'
+          # Updating database and logging setting of Imdb project.
           cd ../Imdb.Loader
           cat appsettings.json | \
           jq '.DatabaseSettings.ConnectionString = "Data Source=../Databases/imdb.db3;"' | \
