@@ -44,17 +44,22 @@ jobs:
 
       - name: Update settings
         run: |
-          cat binaries/Imdb/appsettings.json | \
+          echo 'Updating database and logging setting of Imdb project.'
+          cd binaries/Imdb
+          cat appsettings.json | \
           jq '.ConnectionStrings.Imdb = "Data Source=../Databases/imdb.db3;"' | \
           jq '.Serilog.MinimumLevel.Default = "Imformation"' | \
           jq '(.Serilog.WriteTo[] | select(.Name == "File") | .Args.path) |= "../Logs/Imdb.txt"' \
           > temp.json && mv temp.json appsettings.json
 
+          echo 'Updating database and logging setting of Imdb project.'
+          cd ../Imdb.Loader
           cat appsettings.json | \
           jq '.DatabaseSettings.ConnectionString = "Data Source=../Databases/imdb.db3;"' | \
           jq '.Serilog.MinimumLevel.Default = "Imformation"' | \
           jq '(.Serilog.WriteTo[] | select(.Name == "File") | .Args.path) |= "../Logs/Imdb.Loader.txt"' \
-          > temp.json && mv temp.json binaries/Imdb.Loader/appsettings.json
+          > temp.json && mv temp.json appsettings.json
+          cd ../..
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v2.2.3
