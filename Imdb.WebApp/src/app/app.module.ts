@@ -21,7 +21,7 @@ import { AgGridModule } from 'ag-grid-angular';
 import { ToastNoAnimationModule } from 'ngx-toastr';
 
 function appInitializerFactory(configService: ConfigService) {
-  return () => configService.loadConfiguration('./assets/appSettings.json');
+  return () => configService.loadConfiguration('./assets/appsettings.json');
 };
 
 @NgModule({
