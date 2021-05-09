@@ -48,7 +48,7 @@ jobs:
           cd binaries/Imdb
           cat appsettings.json | \
           jq '.ConnectionStrings.ImDb = "Data Source=../Databases/imdb.db3;"' | \
-          jq '.Serilog.MinimumLevel.Default = "Imformation"' | \
+          jq '.Serilog.MinimumLevel.Default = "Information"' | \
           jq '(.Serilog.WriteTo[] | select(.Name == "File") | .Args.path) |= "../Logs/Imdb.txt"' \
           > temp.json && mv temp.json appsettings.json
 
@@ -56,7 +56,7 @@ jobs:
           cd ../Imdb.Loader
           cat appsettings.json | \
           jq '.DatabaseSettings.ConnectionString = "Data Source=../Databases/imdb.db3;"' | \
-          jq '.Serilog.MinimumLevel.Default = "Imformation"' | \
+          jq '.Serilog.MinimumLevel.Default = "Information"' | \
           jq '(.Serilog.WriteTo[] | select(.Name == "File") | .Args.path) |= "../Logs/Imdb.Loader.txt"' \
           > temp.json && mv temp.json appsettings.json
           cd ../..
