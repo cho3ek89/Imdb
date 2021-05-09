@@ -1,6 +1,7 @@
 # Imdb
-An application set for loading IMDb (Internet Movie Database) files to the SQLite database and presenting this data to the user.\
-Projects:
+An application set for loading IMDb (Internet Movie Database) files to the SQLite database and presenting this data to the user.
+
+## Projects
  - **Imdb** - web API for querying IMDb data from the SQLite database
  - **Imdb.Loader** - for downloading and loading IMDb files to the SQLite database
  - **Imdb.Models** - data models
