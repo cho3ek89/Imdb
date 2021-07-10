@@ -2,16 +2,15 @@ namespace Imdb
 {
     using Microsoft.AspNetCore.Builder;
     using Microsoft.AspNetCore.Hosting;
-    using Microsoft.AspNet.OData.Builder;
-    using Microsoft.AspNet.OData.Extensions;
+    using Microsoft.AspNetCore.OData;
     using Microsoft.EntityFrameworkCore;
     using Microsoft.Extensions.Configuration;
     using Microsoft.Extensions.DependencyInjection;
     using Microsoft.Extensions.Hosting;
     using Microsoft.OData.Edm;
+    using Microsoft.OData.ModelBuilder;
 
-    using Newtonsoft.Json;
-    using Newtonsoft.Json.Serialization;
+    using System.Text.Json;
 
     using DbContexts;
     using Models;
@@ -34,12 +33,22 @@ namespace Imdb
             {
                 options.EnableEndpointRouting = false;
             })
-            .AddNewtonsoftJson(options =>
+            .AddJsonOptions(options =>
             {
-                options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-                options.SerializerSettings.DefaultValueHandling = DefaultValueHandling.Include;
-                options.SerializerSettings.Formatting = Environment.IsDevelopment() ? Formatting.Indented : Formatting.None;
-                options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+                options.JsonSerializerOptions.DictionaryKeyPolicy = null;
+                options.JsonSerializerOptions.PropertyNamingPolicy = null;
+                options.JsonSerializerOptions.WriteIndented = Environment.IsDevelopment();
+            })
+            .AddOData(options =>
+            {
+                options.AddRouteComponents("odata", GetEdmModel());
+
+                options.Select();
+                options.Filter();
+                options.OrderBy();
+                options.SkipToken();
+                options.SetMaxTop(1000);
+                options.Count();
             });
 
             services.AddDbContextPool<ImdbContext>(options =>
@@ -57,8 +66,6 @@ namespace Imdb
                     policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
                 });
             });
-
-            services.AddOData();
 
             services.AddMvc();
         }
@@ -79,12 +86,7 @@ namespace Imdb
 
             app.UseCors();
 
-            app.UseMvc(routeBuilder =>
-            {
-                routeBuilder.Select().Filter().OrderBy().MaxTop(null).SkipToken().Count();
-                routeBuilder.MapODataServiceRoute("odata", "odata", GetEdmModel());
-                routeBuilder.EnableDependencyInjection();
-            });
+            app.UseMvc();
 
             app.UseEndpoints(endpoints =>
             {

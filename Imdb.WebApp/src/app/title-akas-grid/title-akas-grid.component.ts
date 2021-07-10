@@ -24,14 +24,14 @@ export class TitleAkasGridComponent extends GridBaseComponent {
 
   protected getGridColumnDefs(): ColDef[] {
     return [
-      { headerName: 'Title Id', field: 'titleId', type: 'number' },
-      { headerName: 'Index', field: 'index', type: 'number' },
-      { headerName: 'Title', field: 'title', type: 'string' },
-      { headerName: 'Region', field: 'region', type: 'string' },
-      { headerName: 'Language', field: 'language', type: 'string' },
-      { headerName: 'Types', field: 'types', type: 'string' },
-      { headerName: 'Attributes', field: 'attributes', type: 'string' },
-      { headerName: 'Is Original Title', field: 'isOriginalTitle', type: 'boolean' },
+      { headerName: 'Title Id', field: 'TitleId', type: 'number' },
+      { headerName: 'Index', field: 'Index', type: 'number' },
+      { headerName: 'Title', field: 'Title', type: 'string' },
+      { headerName: 'Region', field: 'Region', type: 'string' },
+      { headerName: 'Language', field: 'Language', type: 'string' },
+      { headerName: 'Types', field: 'Types', type: 'string' },
+      { headerName: 'Attributes', field: 'Attributes', type: 'string' },
+      { headerName: 'Is Original Title', field: 'IsOriginalTitle', type: 'boolean' },
     ];
   }
 }

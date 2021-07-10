@@ -24,12 +24,12 @@ export class TitlePrincipalsGridComponent extends GridBaseComponent {
 
   protected getGridColumnDefs(): ColDef[] {
     return [
-      { headerName: 'Title Id', field: 'titleId', type: 'number' },
-      { headerName: 'Index', field: 'index', type: 'number' },
-      { headerName: 'Name Id', field: 'nameId', type: 'number' },
-      { headerName: 'Category', field: 'category', type: 'string' },
-      { headerName: 'Job', field: 'job', type: 'string' },
-      { headerName: 'Characters', field: 'characters', type: 'string' },
+      { headerName: 'Title Id', field: 'TitleId', type: 'number' },
+      { headerName: 'Index', field: 'Index', type: 'number' },
+      { headerName: 'Name Id', field: 'NameId', type: 'number' },
+      { headerName: 'Category', field: 'Category', type: 'string' },
+      { headerName: 'Job', field: 'Job', type: 'string' },
+      { headerName: 'Characters', field: 'Characters', type: 'string' },
     ];
   }
 }

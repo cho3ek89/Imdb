@@ -24,9 +24,9 @@ export class TitleRatingsGridComponent extends GridBaseComponent {
 
   protected getGridColumnDefs(): ColDef[] {
     return [
-      { headerName: 'Title Id', field: 'titleId', type: 'number' },
-      { headerName: 'Average Rating', field: 'averageRating', type: 'number' },
-      { headerName: 'Number Of Votes', field: 'numberOfVotes', type: 'number' },
+      { headerName: 'Title Id', field: 'TitleId', type: 'number' },
+      { headerName: 'Average Rating', field: 'AverageRating', type: 'number' },
+      { headerName: 'Number Of Votes', field: 'NumberOfVotes', type: 'number' },
     ];
   }
 }

@@ -24,9 +24,9 @@ export class TitleCrewGridComponent extends GridBaseComponent {
 
   protected getGridColumnDefs(): ColDef[] {
     return [
-      { headerName: 'Title Id', field: 'titleId', type: 'number' },
-      { headerName: 'Director Name Ids', field: 'directorNameIds', type: 'string' },
-      { headerName: 'Writer Name Ids', field: 'writerNameIds', type: 'string' },
+      { headerName: 'Title Id', field: 'TitleId', type: 'number' },
+      { headerName: 'Director Name Ids', field: 'DirectorNameIds', type: 'string' },
+      { headerName: 'Writer Name Ids', field: 'WriterNameIds', type: 'string' },
     ];
   }
 }

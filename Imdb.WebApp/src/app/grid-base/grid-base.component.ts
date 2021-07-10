@@ -35,7 +35,7 @@ export abstract class GridBaseComponent implements OnInit {
 
         this.getData(params)
           .subscribe(result => {
-            params.successCallback(result.result, result.count);
+            params.successCallback(result.Result, result.Count);
 
             if (result.count == 0)
               this.gridOptions.api?.showNoRowsOverlay();

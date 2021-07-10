@@ -24,12 +24,12 @@ export class NameBasicsGridComponent extends GridBaseComponent {
 
   protected getGridColumnDefs(): ColDef[] {
     return [
-      { headerName: 'Name Id', field: 'nameId', type: 'number' },
-      { headerName: 'Name', field: 'name', type: 'string' },
-      { headerName: 'Birth Year', field: 'birthYear', type: 'number' },
-      { headerName: 'Death Year', field: 'deathYear', type: 'number' },
-      { headerName: 'Professions', field: 'professions', type: 'string' },
-      { headerName: 'Known For Title Ids', field: 'knownForTitleIds', type: 'string' },
+      { headerName: 'Name Id', field: 'NameId', type: 'number' },
+      { headerName: 'Name', field: 'Name', type: 'string' },
+      { headerName: 'Birth Year', field: 'BirthYear', type: 'number' },
+      { headerName: 'Death Year', field: 'DeathYear', type: 'number' },
+      { headerName: 'Professions', field: 'Professions', type: 'string' },
+      { headerName: 'Known For Title Ids', field: 'KnownForTitleIds', type: 'string' },
     ];
   }
 }

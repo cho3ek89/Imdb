@@ -24,10 +24,10 @@ export class TitleEpisodesGridComponent extends GridBaseComponent {
 
   protected getGridColumnDefs(): ColDef[] {
     return [
-      { headerName: 'Title Id', field: 'titleId', type: 'number' },
-      { headerName: 'Parent Title Id', field: 'parentTitleId', type: 'number' },
-      { headerName: 'Season Number', field: 'seasonNumber', type: 'number' },
-      { headerName: 'Episode Number', field: 'episodeNumber', type: 'number' },
+      { headerName: 'Title Id', field: 'TitleId', type: 'number' },
+      { headerName: 'Parent Title Id', field: 'ParentTitleId', type: 'number' },
+      { headerName: 'Season Number', field: 'SeasonNumber', type: 'number' },
+      { headerName: 'Episode Number', field: 'EpisodeNumber', type: 'number' },
     ];
   }
 }

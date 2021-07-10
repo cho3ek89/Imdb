@@ -24,15 +24,15 @@ export class TitleBasicsGridComponent extends GridBaseComponent {
 
   protected getGridColumnDefs(): ColDef[] {
     return [
-      { headerName: 'Title Id', field: 'titleId', type: 'number' },
-      { headerName: 'Title Type', field: 'titleType', type: 'string' },
-      { headerName: 'Primary Title', field: 'primaryTitle', type: 'string' },
-      { headerName: 'Original Title', field: 'originalTitle', type: 'string' },
-      { headerName: 'Is Adult', field: 'isAdult', type: 'boolean' },
-      { headerName: 'Start Year', field: 'startYear', type: 'number' },
-      { headerName: 'End Year', field: 'endYear', type: 'number' },
-      { headerName: 'Runtime Minutes', field: 'runtimeMinutes', type: 'number' },
-      { headerName: 'Genres', field: 'genres', type: 'string' },
+      { headerName: 'Title Id', field: 'TitleId', type: 'number' },
+      { headerName: 'Title Type', field: 'TitleType', type: 'string' },
+      { headerName: 'Primary Title', field: 'PrimaryTitle', type: 'string' },
+      { headerName: 'Original Title', field: 'OriginalTitle', type: 'string' },
+      { headerName: 'Is Adult', field: 'IsAdult', type: 'boolean' },
+      { headerName: 'Start Year', field: 'StartYear', type: 'number' },
+      { headerName: 'End Year', field: 'EndYear', type: 'number' },
+      { headerName: 'Runtime Minutes', field: 'RuntimeMinutes', type: 'number' },
+      { headerName: 'Genres', field: 'Genres', type: 'string' },
     ];
   }
 }

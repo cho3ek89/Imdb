@@ -1,8 +1,8 @@
 ﻿namespace Imdb.Controllers
 {
-    using Microsoft.AspNet.OData.Query;
     using Microsoft.AspNetCore.Mvc;
-    
+    using Microsoft.AspNetCore.OData.Query;
+
     using System.Linq;
 
     using DbContexts;
