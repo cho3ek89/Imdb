@@ -42,8 +42,10 @@ export abstract class GridBaseComponent implements OnInit {
             else
               this.gridOptions.api?.hideOverlay();
           }, error => {
-            console.error(error);
-            this.toastrService.error('Data loading failed!');
+            this.gridOptions.api?.showNoRowsOverlay();
+            
+            console.error(error.error);
+            this.toastrService.error(error.error.detail, error.error.title);
           });
       }
     }

@@ -10,8 +10,6 @@ namespace Imdb
     using Microsoft.OData.Edm;
     using Microsoft.OData.ModelBuilder;
 
-    using System.Text.Json;
-
     using DbContexts;
     using Models;
 
@@ -72,8 +70,7 @@ namespace Imdb
 
         public void Configure(IApplicationBuilder app)
         {
-            if (Environment.IsDevelopment())
-                app.UseDeveloperExceptionPage();
+            app.UseExceptionHandler("/exception");
 
             app.UseHttpsRedirection();
 
@@ -88,10 +85,7 @@ namespace Imdb
 
             app.UseMvc();
 
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllers();
-            });
+            app.UseEndpoints(endpoints => endpoints.MapControllers());
         }
 
         private static IEdmModel GetEdmModel()
