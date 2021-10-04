@@ -14,7 +14,7 @@ jobs:
       version: 1.0.0.0
     strategy:
       matrix:
-        runtime: [linuxmint.18.3-x64, win10-x64]
+        runtime: [linux-x64, win10-x64]
     steps:
       - name: Checkout
         uses: actions/checkout@v2.3.4
