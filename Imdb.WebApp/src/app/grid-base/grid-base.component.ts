@@ -1,28 +1,26 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { AgGridAngular } from 'ag-grid-angular';
 import { ColDef, GridOptions, IGetRowsParams } from 'ag-grid-community';
 import { ToastrService } from 'ngx-toastr';
 
-import { AgGridOptionsProvider } from '../services/ag-grid-options.provider';
-import { DataService } from '../services/data.service'
+import { AgGridOptionsService } from 'src/services/ag-grid-options.service';
+import { DataService } from 'src/services/data.service';
 
 @Component({
-  selector: 'app-grid-base',
-  template: ''
+  selector: 'grid-base',
+  template: ``,
 })
-export abstract class GridBaseComponent implements OnInit {
+export abstract class GridBaseComponent {
   @ViewChild('grid') grid: AgGridAngular | undefined;
   gridOptions: GridOptions;
   rowData: any;
 
-  constructor(protected dataService: DataService, agGridOptionsProvider: AgGridOptionsProvider, private toastrService: ToastrService) {
-    this.gridOptions = agGridOptionsProvider.getGridOptions();
+  constructor(protected dataService: DataService, agGridOptionsService: AgGridOptionsService, private toastrService: ToastrService) {
+    this.gridOptions = agGridOptionsService.getGridOptions();
     this.gridOptions.columnDefs = this.getGridColumnDefs();
   }
-
-  ngOnInit(): void { }
 
   protected abstract getData(params: IGetRowsParams): Observable<any>;
 
@@ -43,7 +41,7 @@ export abstract class GridBaseComponent implements OnInit {
               this.gridOptions.api?.hideOverlay();
           }, error => {
             this.gridOptions.api?.showNoRowsOverlay();
-            
+
             console.error(error.error);
             this.toastrService.error(error.error.detail, error.error.title);
           });

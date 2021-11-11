@@ -1,12 +1,11 @@
-﻿namespace Imdb.Loader
+﻿namespace Imdb.Loader;
+
+using System.Threading;
+using System.Threading.Tasks;
+
+public interface IImdbUpdateService
 {
-	using System.Threading;
-	using System.Threading.Tasks;
+    Task UpdateDatabase();
 
-	public interface IImdbUpdateService
-	{
-		Task UpdateDatabase();
-
-		Task UpdateDatabase(CancellationToken cancellationToken);
-	}
+    Task UpdateDatabase(CancellationToken cancellationToken);
 }

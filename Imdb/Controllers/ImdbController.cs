@@ -1,75 +1,74 @@
-﻿namespace Imdb.Controllers
+﻿namespace Imdb.Controllers;
+
+using Imdb.DbContexts;
+using Imdb.Models;
+
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OData.Query;
+
+using System.Linq;
+
+[ApiController]
+[Route("[controller]")]
+public class ImdbController : ControllerBase
 {
-    using Microsoft.AspNetCore.Mvc;
-    using Microsoft.AspNetCore.OData.Query;
+    private readonly ImdbContext context;
 
-    using System.Linq;
-
-    using DbContexts;
-    using Models;
-
-    [ApiController]
-    [Route("[controller]")]
-    public class ImdbController : ControllerBase
+    public ImdbController(ImdbContext context)
     {
-        private readonly ImdbContext context;
+        this.context = context;
+    }
 
-        public ImdbController(ImdbContext context)
+    [HttpGet("name-basics")]
+    public IActionResult GetNameBasics(ODataQueryOptions<NameBasics> options) =>
+        GetResults(context.NameBasics, options);
+
+    [HttpGet("title-akas")]
+    public IActionResult GetTitleAkas(ODataQueryOptions<TitleAkas> options) =>
+        GetResults(context.TitleAkas, options);
+
+    [HttpGet("title-basics")]
+    public IActionResult GetTitleBasics(ODataQueryOptions<TitleBasics> options) =>
+        GetResults(context.TitleBasics, options);
+
+    [HttpGet("title-crew")]
+    public IActionResult GetTitleCrew(ODataQueryOptions<TitleCrew> options) =>
+        GetResults(context.TitleCrew, options);
+
+    [HttpGet("title-episodes")]
+    public IActionResult GetTitleEpisodes(ODataQueryOptions<TitleEpisode> options) =>
+        GetResults(context.TitleEpisodes, options);
+
+    [HttpGet("title-principals")]
+    public IActionResult GetTitlePrincipals(ODataQueryOptions<TitlePrincipals> options) =>
+        GetResults(context.TitlePrincipals, options);
+
+    [HttpGet("title-ratings")]
+    public IActionResult GetTitleRatings(ODataQueryOptions<TitleRating> options) =>
+        GetResults(context.TitleRatings, options);
+
+    private IActionResult GetResults<T>(IQueryable entityQuery, ODataQueryOptions<T> options) where T : class
+    {
+        var resultQuery = options.ApplyTo(entityQuery) as IQueryable<dynamic>;
+
+        var result = resultQuery.ToList();
+
+        if (options.Count != null && options.Count.Value)
         {
-            this.context = context;
+            var resultCountQuery = options.ApplyTo(entityQuery,
+                AllowedQueryOptions.Skip | AllowedQueryOptions.Top) as IQueryable<dynamic>;
+
+            var resultCount = resultCountQuery.Count();
+
+            return Ok(new
+            {
+                Result = result,
+                Count = resultCount,
+            });
         }
-
-        [HttpGet("name-basics")]
-        public IActionResult GetNameBasics(ODataQueryOptions<NameBasics> options) =>
-            GetResults(context.NameBasics, options);
-
-        [HttpGet("title-akas")]
-        public IActionResult GetTitleAkas(ODataQueryOptions<TitleAkas> options) =>
-            GetResults(context.TitleAkas, options);
-
-        [HttpGet("title-basics")]
-        public IActionResult GetTitleBasics(ODataQueryOptions<TitleBasics> options) => 
-            GetResults(context.TitleBasics, options);
-
-        [HttpGet("title-crew")]
-        public IActionResult GetTitleCrew(ODataQueryOptions<TitleCrew> options) =>
-            GetResults(context.TitleCrew, options);
-
-        [HttpGet("title-episodes")]
-        public IActionResult GetTitleEpisodes(ODataQueryOptions<TitleEpisode> options) =>
-            GetResults(context.TitleEpisodes, options);
-
-        [HttpGet("title-principals")]
-        public IActionResult GetTitlePrincipals(ODataQueryOptions<TitlePrincipals> options) =>
-            GetResults(context.TitlePrincipals, options);
-
-        [HttpGet("title-ratings")]
-        public IActionResult GetTitleRatings(ODataQueryOptions<TitleRating> options) =>
-            GetResults(context.TitleRatings, options);
-
-        private IActionResult GetResults<T>(IQueryable entityQuery, ODataQueryOptions<T> options) where T: class
+        else
         {
-            var resultQuery = options.ApplyTo(entityQuery) as IQueryable<dynamic>;
-
-            var result = resultQuery.ToList();
-
-            if (options.Count != null && options.Count.Value)
-            {
-                var resultCountQuery = options.ApplyTo(entityQuery,
-                    AllowedQueryOptions.Skip | AllowedQueryOptions.Top) as IQueryable<dynamic>;
-
-                var resultCount = resultCountQuery.Count();
-
-                return Ok(new
-                {
-                    Result = result,
-                    Count = resultCount,
-                });
-            }
-            else
-            {
-                return Ok(result);
-            }
+            return Ok(result);
         }
     }
 }

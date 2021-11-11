@@ -1,9 +1,8 @@
-﻿namespace Imdb.Loader.Options
-{
-    public class DatabaseSettings
-    {
-        public string ConnectionString { get; set; }
+﻿namespace Imdb.Loader.Options;
 
-        public bool VacuumDatabase { get; set; }
-    }
+public class DatabaseSettings
+{
+    public string ConnectionString { get; set; }
+
+    public bool VacuumDatabase { get; set; }
 }

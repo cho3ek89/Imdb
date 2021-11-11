@@ -1,102 +1,101 @@
-﻿namespace Imdb.DbContexts
+﻿namespace Imdb.DbContexts;
+
+using Imdb.Models;
+
+using Microsoft.EntityFrameworkCore;
+
+public class ImdbContext : DbContext
 {
-    using Microsoft.EntityFrameworkCore;
+    public ImdbContext(DbContextOptions<ImdbContext> options)
+        : base(options) { }
 
-    using Models;
+    public DbSet<NameBasics> NameBasics { get; set; }
 
-    public class ImdbContext : DbContext
+    public DbSet<TitleAkas> TitleAkas { get; set; }
+
+    public DbSet<TitleBasics> TitleBasics { get; set; }
+
+    public DbSet<TitleCrew> TitleCrew { get; set; }
+
+    public DbSet<TitleEpisode> TitleEpisodes { get; set; }
+
+    public DbSet<TitlePrincipals> TitlePrincipals { get; set; }
+
+    public DbSet<TitleRating> TitleRatings { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        public ImdbContext(DbContextOptions<ImdbContext> options)
-            : base(options) { }
+        OnNameBasicsModelCreating(modelBuilder);
+        OnTitleAkasModelCreating(modelBuilder);
+        OnTitleBasicsModelCreating(modelBuilder);
+        OnTitleCrewModelCreating(modelBuilder);
+        OnTitleEpisodeModelCreating(modelBuilder);
+        OnTitlePrincipalsModelCreating(modelBuilder);
+        OnTitleRatingModelCreating(modelBuilder);
+    }
 
-        public DbSet<NameBasics> NameBasics { get; set; }
+    private static void OnNameBasicsModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<NameBasics>()
+            .ToTable("name.basics")
+            .HasKey(k => new { k.NameId });
 
-        public DbSet<TitleAkas> TitleAkas { get; set; }
+        modelBuilder.Entity<NameBasics>()
+            .Property(p => p.Name)
+            .IsRequired();
+    }
 
-        public DbSet<TitleBasics> TitleBasics { get; set; }
+    private static void OnTitleAkasModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<TitleAkas>()
+            .ToTable("title.akas")
+            .HasKey(k => new { k.TitleId, k.Index });
 
-        public DbSet<TitleCrew> TitleCrew { get; set; }
+        modelBuilder.Entity<TitleAkas>()
+            .Property(p => p.Title)
+            .IsRequired();
+    }
 
-        public DbSet<TitleEpisode> TitleEpisodes { get; set; }
+    private static void OnTitleBasicsModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<TitleBasics>()
+            .ToTable("title.basics")
+            .HasKey(k => new { k.TitleId });
 
-        public DbSet<TitlePrincipals> TitlePrincipals { get; set; }
+        modelBuilder.Entity<TitleBasics>()
+            .Property(p => p.TitleType)
+            .IsRequired();
 
-        public DbSet<TitleRating> TitleRatings { get; set; }
+        modelBuilder.Entity<TitleBasics>()
+            .Property(p => p.PrimaryTitle)
+            .IsRequired();
+    }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            OnNameBasicsModelCreating(modelBuilder);
-            OnTitleAkasModelCreating(modelBuilder);
-            OnTitleBasicsModelCreating(modelBuilder);
-            OnTitleCrewModelCreating(modelBuilder);
-            OnTitleEpisodeModelCreating(modelBuilder);
-            OnTitlePrincipalsModelCreating(modelBuilder);
-            OnTitleRatingModelCreating(modelBuilder);
-        }
+    private static void OnTitleCrewModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<TitleCrew>()
+            .ToTable("title.crew")
+            .HasKey(k => new { k.TitleId });
+    }
 
-        private static void OnNameBasicsModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<NameBasics>()
-                .ToTable("name.basics")
-                .HasKey(k => new { k.NameId });
+    private static void OnTitleEpisodeModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<TitleEpisode>()
+            .ToTable("title.episodes")
+            .HasKey(k => new { k.TitleId });
+    }
 
-            modelBuilder.Entity<NameBasics>()
-                .Property(p => p.Name)
-                .IsRequired();
-        }
+    private static void OnTitlePrincipalsModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<TitlePrincipals>()
+            .ToTable("title.principals")
+            .HasKey(k => new { k.TitleId, k.Index });
+    }
 
-        private static void OnTitleAkasModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<TitleAkas>()
-                .ToTable("title.akas")
-                .HasKey(k => new { k.TitleId, k.Index });
-
-            modelBuilder.Entity<TitleAkas>()
-                .Property(p => p.Title)
-                .IsRequired();
-        }
-
-        private static void OnTitleBasicsModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<TitleBasics>()
-                .ToTable("title.basics")
-                .HasKey(k => new { k.TitleId });
-
-            modelBuilder.Entity<TitleBasics>()
-                .Property(p => p.TitleType)
-                .IsRequired();
-
-            modelBuilder.Entity<TitleBasics>()
-                .Property(p => p.PrimaryTitle)
-                .IsRequired();
-        }
-
-        private static void OnTitleCrewModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<TitleCrew>()
-                .ToTable("title.crew")
-                .HasKey(k => new { k.TitleId });
-        }
-
-        private static void OnTitleEpisodeModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<TitleEpisode>()
-                .ToTable("title.episodes")
-                .HasKey(k => new { k.TitleId });
-        }
-
-        private static void OnTitlePrincipalsModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<TitlePrincipals>()
-                .ToTable("title.principals")
-                .HasKey(k => new { k.TitleId, k.Index });
-        }
-
-        private static void OnTitleRatingModelCreating(ModelBuilder modelBuilder)
-        {
-            modelBuilder.Entity<TitleRating>()
-                .ToTable("title.ratings")
-                .HasKey(k => new { k.TitleId });
-        }
+    private static void OnTitleRatingModelCreating(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<TitleRating>()
+            .ToTable("title.ratings")
+            .HasKey(k => new { k.TitleId });
     }
 }

@@ -1,11 +1,10 @@
-﻿namespace Imdb.Models
+﻿namespace Imdb.Models;
+
+public class TitleRating
 {
-    public class TitleRating
-    {
-		public uint TitleId { get; set; }
+    public uint TitleId { get; set; }
 
-		public double AverageRating { get; set; }
+    public double AverageRating { get; set; }
 
-		public uint NumberOfVotes { get; set; }
-	}
+    public uint NumberOfVotes { get; set; }
 }

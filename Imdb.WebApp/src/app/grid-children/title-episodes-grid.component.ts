@@ -1,21 +1,20 @@
 import { Component } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { IGetRowsParams, ColDef } from 'ag-grid-community';
+import { ColDef, IGetRowsParams } from 'ag-grid-community';
 import { ToastrService } from 'ngx-toastr';
 
+import { AgGridOptionsService } from 'src/services/ag-grid-options.service';
+import { DataService } from 'src/services/data.service';
 import { GridBaseComponent } from '../grid-base/grid-base.component';
-import { AgGridOptionsProvider } from '../services/ag-grid-options.provider';
-import { DataService } from '../services/data.service';
 
 @Component({
-  selector: 'app-title-episodes-grid',
+  selector: 'title-episodes-grid',
   templateUrl: './../grid-base/grid-base.component.html',
-  styleUrls: ['./../grid-base/grid-base.component.scss']
 })
 export class TitleEpisodesGridComponent extends GridBaseComponent {
-  constructor(dataService: DataService, agGridOptionsProvider: AgGridOptionsProvider, toastrService: ToastrService) {
-    super(dataService, agGridOptionsProvider, toastrService);
+  constructor(dataService: DataService, agGridOptionsService: AgGridOptionsService, toastrService: ToastrService) {
+    super(dataService, agGridOptionsService, toastrService);
   }
 
   protected getData(params: IGetRowsParams): Observable<any> {

@@ -39,7 +39,7 @@ jobs:
         run: |
           cd Imdb.WebApp
           npm ci
-          npm run build -- --prod --output-path '../binaries/Imdb/wwwroot'
+          npm run build -- --configuration production --output-path '../binaries/Imdb/wwwroot'
           cd ..
 
       - name: Update settings

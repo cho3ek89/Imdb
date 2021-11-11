@@ -10,6 +10,7 @@
 /Imdb.Models/obj/
 
 # JS
+/Imdb.WebApp/.angular
 /Imdb.WebApp/dist
 /Imdb.WebApp/node_modules
 

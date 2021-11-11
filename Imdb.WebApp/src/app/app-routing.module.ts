@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { NameBasicsGridComponent } from './name-basics-grid/name-basics-grid.component';
-import { TitleAkasGridComponent } from './title-akas-grid/title-akas-grid.component';
-import { TitleBasicsGridComponent } from './title-basics-grid/title-basics-grid.component';
-import { TitleCrewGridComponent } from './title-crew-grid/title-crew-grid.component';
-import { TitleEpisodesGridComponent } from './title-episodes-grid/title-episodes-grid.component';
-import { TitlePrincipalsGridComponent } from './title-principals-grid/title-principals-grid.component';
-import { TitleRatingsGridComponent } from './title-ratings-grid/title-ratings-grid.component';
+import { NameBasicsGridComponent } from './grid-children/name-basics-grid.component';
+import { TitleAkasGridComponent } from './grid-children/title-akas-grid.component';
+import { TitleBasicsGridComponent } from './grid-children/title-basics-grid.component';
+import { TitleCrewGridComponent } from './grid-children/title-crew-grid.component';
+import { TitleEpisodesGridComponent } from './grid-children/title-episodes-grid.component';
+import { TitlePrincipalsGridComponent } from './grid-children/title-principals-grid.component';
+import { TitleRatingsGridComponent } from './grid-children/title-ratings-grid.component';
 
 const routes: Routes = [
   { path: 'name-basics', component: NameBasicsGridComponent },

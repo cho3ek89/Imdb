@@ -1,30 +1,29 @@
-﻿namespace Imdb.Controllers
+﻿namespace Imdb.Controllers;
+
+using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+
+using System.Net;
+
+[ApiController]
+[ApiExplorerSettings(IgnoreApi = true)]
+public class ExceptionController : ControllerBase
 {
-    using Microsoft.AspNetCore.Diagnostics;
-    using Microsoft.AspNetCore.Mvc;
-    using Microsoft.Extensions.Logging;
+    private readonly ILogger<ExceptionController> logger;
 
-    using System.Net;
-
-    [ApiController]
-    [ApiExplorerSettings(IgnoreApi = true)]
-    public class ExceptionController : ControllerBase
+    public ExceptionController(ILogger<ExceptionController> logger)
     {
-        private readonly ILogger<ExceptionController> logger;
+        this.logger = logger;
+    }
 
-        public ExceptionController(ILogger<ExceptionController> logger)
-        {
-            this.logger = logger;
-        }
+    [Route("/exception")]
+    public IActionResult HandleException()
+    {
+        var exception = HttpContext.Features.Get<IExceptionHandlerFeature>().Error;
 
-        [Route("/exception")]
-        public IActionResult HandleException()
-        {
-            var exception = HttpContext.Features.Get<IExceptionHandlerFeature>().Error;
+        logger?.LogError(exception, "An exception has occurred while executing the request.");
 
-            logger?.LogError(exception, "An exception has occurred while executing the request.");
-
-            return Problem(detail: exception.Message, statusCode: (int)HttpStatusCode.BadRequest);
-        }
+        return Problem(detail: exception.Message, statusCode: (int)HttpStatusCode.BadRequest);
     }
 }

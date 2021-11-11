@@ -1,8 +1,8 @@
-﻿namespace Imdb.Loader.Helpers
+﻿namespace Imdb.Loader.Helpers;
+
+public static class SqlQueries
 {
-    public static class SqlQueries
-    {
-        public const string CreateMissingImdbTables = @"
+    public const string CreateMissingImdbTables = @"
 CREATE TABLE IF NOT EXISTS [name.basics] (
     NameId           INTEGER NOT NULL
                              CONSTRAINT [PK_name.basics] PRIMARY KEY,
@@ -84,8 +84,7 @@ CREATE TABLE IF NOT EXISTS [title.ratings] (
 WITHOUT ROWID;
 ";
 
-        public const string PragmaStatements = "PRAGMA cache_size = -125;PRAGMA synchronous = NORMAL;PRAGMA journal_mode = WAL";
+    public const string PragmaStatements = "PRAGMA cache_size = -125;PRAGMA synchronous = NORMAL;PRAGMA journal_mode = WAL";
 
-        public const string Vacuum = "VACUUM";
-    }
+    public const string Vacuum = "VACUUM";
 }
