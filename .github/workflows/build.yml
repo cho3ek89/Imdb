@@ -30,10 +30,10 @@ jobs:
           node-version: '17.x'
 
       - name: Build Imdb
-        run: dotnet publish 'Imdb\Imdb.csproj' -o 'binaries/Imdb' -c 'Release' -r '${{ matrix.runtime }}' -v 'normal' --self-contained true -p:PublishTrimmed=true -p:TrimMode=Link -p:Version=${{ env.version }}
+        run: dotnet publish 'Imdb/Imdb.csproj' -o 'binaries/Imdb' -c 'Release' -r '${{ matrix.runtime }}' -v 'normal' --self-contained true -p:PublishReadyToRun=true -p:PublishTrimmed=false -p:TrimMode=Link -p:Version=${{ env.version }}
 
       - name: Build Imdb.Loader
-        run: dotnet publish 'Imdb.Loader/Imdb.Loader.csproj' -o 'binaries/Imdb.Loader' -c 'Release' -r '${{ matrix.runtime }}' -v 'normal' --self-contained true -p:PublishTrimmed=true -p:TrimMode=Link -p:Version=${{ env.version }}
+        run: dotnet publish 'Imdb.Loader/Imdb.Loader.csproj' -o 'binaries/Imdb.Loader' -c 'Release' -r '${{ matrix.runtime }}' -v 'normal' --self-contained true -p:PublishReadyToRun=true -p:PublishTrimmed=false -p:TrimMode=Link -p:Version=${{ env.version }}
 
       - name: Build Imdb.WebApp
         run: |
