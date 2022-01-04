@@ -11,6 +11,7 @@
 
 # JS
 /Imdb.WebApp/.angular
+/Imdb.WebApp/.vscode/
 /Imdb.WebApp/dist
 /Imdb.WebApp/node_modules
 
