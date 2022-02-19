@@ -64,5 +64,5 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v2.2.3
         with:
-          name: Imdb.Loader_${{ matrix.runtime }}_${{ env.version }}
+          name: Imdb_${{ matrix.runtime }}_${{ env.version }}
           path: binaries/
