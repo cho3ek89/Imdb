@@ -31,20 +31,22 @@ export abstract class GridBaseComponent {
       getRows: (params: IGetRowsParams) => {
         this.gridOptions.api?.showLoadingOverlay();
 
-        this.getData(params)
-          .subscribe(result => {
+        this.getData(params).subscribe({
+          next: result => {
             params.successCallback(result.Result, result.Count);
 
             if (result.count == 0)
               this.gridOptions.api?.showNoRowsOverlay();
             else
               this.gridOptions.api?.hideOverlay();
-          }, error => {
+          },
+          error: error => {
             this.gridOptions.api?.showNoRowsOverlay();
 
             console.error(error.error);
             this.toastrService.error(error.error.detail, error.error.title);
-          });
+          }
+        });
       }
     }
 
