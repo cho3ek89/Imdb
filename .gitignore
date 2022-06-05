@@ -1,21 +1,21 @@
 # C#
 *.suo
 *.user
-/.vs/
-/Imdb/bin/
-/Imdb/obj/
-/Imdb.Loader/bin/
-/Imdb.Loader/obj/
-/Imdb.Models/bin/
-/Imdb.Models/obj/
+/Imdb/.vs/
+/Imdb/Imdb/bin/
+/Imdb/Imdb/obj/
+/Imdb/Imdb.Loader/bin/
+/Imdb/Imdb.Loader/obj/
+/Imdb/Imdb.Models/bin/
+/Imdb/Imdb.Models/obj/
 
 # JS
 /Imdb.WebApp/.angular
-/Imdb.WebApp/.vscode/
+/Imdb.WebApp/.vscode
 /Imdb.WebApp/dist
 /Imdb.WebApp/node_modules
 
 # Additional
 /binaries/
-/Databases/
-/Logs/
+/Imdb/Databases/
+/Imdb/Logs/
