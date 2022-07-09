@@ -36,7 +36,7 @@ function appInitializerFactory(configService: ConfigService) {
     TitleRatingsGridComponent,
   ],
   imports: [
-    AgGridModule.withComponents([]),
+    AgGridModule,
     AppRoutingModule,
     BrowserModule,
     HttpClientModule,
