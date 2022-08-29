@@ -1,8 +1,8 @@
-﻿namespace Imdb.DbContexts;
-
-using Imdb.Models;
+﻿using Imdb.Models;
 
 using Microsoft.EntityFrameworkCore;
+
+namespace Imdb.DbContexts;
 
 public class ImdbContext : DbContext
 {

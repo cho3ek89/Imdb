@@ -1,10 +1,6 @@
-﻿namespace Imdb.Loader.Helpers;
+﻿using System.IO.Compression;
 
-using System;
-using System.IO;
-using System.IO.Compression;
-using System.Threading;
-using System.Threading.Tasks;
+namespace Imdb.Loader.Helpers;
 
 public static class FileHelper
 {

@@ -1,12 +1,10 @@
-﻿namespace Imdb.Controllers;
-
-using Imdb.DbContexts;
+﻿using Imdb.DbContexts;
 using Imdb.Models;
 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Query;
 
-using System.Linq;
+namespace Imdb.Controllers;
 
 [ApiController]
 [Route("[controller]")]

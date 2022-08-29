@@ -1,12 +1,10 @@
-﻿namespace Imdb.Loader.Helpers;
-
-using CsvHelper.Configuration;
+﻿using CsvHelper.Configuration;
 
 using Imdb.Models;
 
-using System;
 using System.Globalization;
-using System.Linq;
+
+namespace Imdb.Loader.Helpers;
 
 public sealed class ImdbFilesCsvMap
 {

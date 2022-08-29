@@ -1,6 +1,4 @@
-﻿namespace Imdb.Loader;
-
-using CsvHelper;
+﻿using CsvHelper;
 using CsvHelper.Configuration;
 
 using Imdb.Models;
@@ -11,12 +9,9 @@ using Microsoft.Data.Sqlite;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-using System;
 using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
+
+namespace Imdb.Loader;
 
 public class ImdbRepository : IImdbRepository
 {

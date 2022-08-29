@@ -1,9 +1,6 @@
-﻿namespace Imdb.Loader;
+﻿using Imdb.Loader.Options;
 
-using Imdb.Loader.Options;
-
-using System.Threading;
-using System.Threading.Tasks;
+namespace Imdb.Loader;
 
 public interface IImdbRepository
 {

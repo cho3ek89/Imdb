@@ -1,10 +1,9 @@
-﻿namespace Imdb.Controllers;
-
-using Microsoft.AspNetCore.Diagnostics;
+﻿using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 using System.Net;
+
+namespace Imdb.Controllers;
 
 [ApiController]
 [ApiExplorerSettings(IgnoreApi = true)]
