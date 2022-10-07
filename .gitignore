@@ -4,10 +4,10 @@
 /Imdb/.vs/
 /Imdb/Imdb/bin/
 /Imdb/Imdb/obj/
+/Imdb/Imdb.Common/bin/
+/Imdb/Imdb.Common/obj/
 /Imdb/Imdb.Loader/bin/
 /Imdb/Imdb.Loader/obj/
-/Imdb/Imdb.Models/bin/
-/Imdb/Imdb.Models/obj/
 
 # JS
 /Imdb.WebApp/.angular

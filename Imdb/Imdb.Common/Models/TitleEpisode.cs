@@ -1,4 +1,4 @@
-﻿namespace Imdb.Models;
+﻿namespace Imdb.Common.Models;
 
 public class TitleEpisode
 {

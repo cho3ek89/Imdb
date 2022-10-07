@@ -4,10 +4,8 @@ namespace Imdb.Loader.Helpers;
 
 public static class FileHelper
 {
-    public static async Task DownloadFile(Uri fileToDownload, string fileDownloaded)
-    {
+    public static async Task DownloadFile(Uri fileToDownload, string fileDownloaded) =>
         await DownloadFile(fileToDownload, fileDownloaded, CancellationToken.None);
-    }
 
     public static async Task DownloadFile(Uri fileToDownload, string fileDownloaded, CancellationToken cancellationToken)
     {
@@ -30,10 +28,8 @@ public static class FileHelper
         }
     }
 
-    public static async Task DecompressGZipArchive(string fileToDecompress)
-    {
+    public static async Task DecompressGZipArchive(string fileToDecompress) => 
         await DecompressGZipArchive(fileToDecompress, CancellationToken.None);
-    }
 
     public static async Task DecompressGZipArchive(string fileToDecompress, CancellationToken cancellationToken)
     {
@@ -54,11 +50,8 @@ public static class FileHelper
         }
     }
 
-    public static async Task DeleteDirectory(string directoryPath)
+    public static async Task DeleteDirectory(string directoryPath, int numberOfAttempts = 15, int delayMiliseconds = 30)
     {
-        var numberOfAttempts = 15;
-        var delayMiliseconds = 30;
-
         while (true)
         {
             try

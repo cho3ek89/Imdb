@@ -5,9 +5,9 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Imdb", "Imdb\Imdb.csproj", "{7B344A55-F702-4B8D-8AFF-DBCEA79FC2F5}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Imdb.Models", "Imdb.Models\Imdb.Models.csproj", "{B5147F40-3466-4218-A8D9-D36563E57619}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Imdb.Common", "Imdb.Common\Imdb.Common.csproj", "{B5147F40-3466-4218-A8D9-D36563E57619}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Imdb.Loader", "Imdb.Loader\Imdb.Loader.csproj", "{9B909A17-C0AD-4CF5-A576-12C1EEC011E1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Imdb.Loader", "Imdb.Loader\Imdb.Loader.csproj", "{9B909A17-C0AD-4CF5-A576-12C1EEC011E1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

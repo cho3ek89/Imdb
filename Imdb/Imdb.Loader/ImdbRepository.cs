@@ -1,11 +1,14 @@
 ﻿using CsvHelper;
 using CsvHelper.Configuration;
 
-using Imdb.Models;
+using EFCore.BulkExtensions;
+
+using Imdb.Common.Models;
+using Imdb.Common.DbContexts;
 using Imdb.Loader.Helpers;
 using Imdb.Loader.Options;
 
-using Microsoft.Data.Sqlite;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
@@ -25,127 +28,95 @@ public class ImdbRepository : IImdbRepository
         this.logger = logger;
     }
 
-    public async Task UpdateDatabase(ImdbFiles filesToLoad)
-    {
+    public async Task UpdateDatabase(ImdbFiles filesToLoad) => 
         await UpdateDatabase(filesToLoad, CancellationToken.None);
-    }
 
     public async Task UpdateDatabase(ImdbFiles filesToLoad, CancellationToken cancellationToken)
     {
-        using var connection = new SqliteConnection(settings.ConnectionString);
-        await connection.OpenAsync(cancellationToken);
+        var optionsBuilder = new DbContextOptionsBuilder<ImdbContext>()
+            .UseSqlite(settings.ConnectionString)
+            .UseQueryTrackingBehavior(QueryTrackingBehavior.TrackAll);
 
-        await CreateTablesIfMissing(connection, cancellationToken);
+        using var context = new ImdbContext(optionsBuilder.Options);
+
+        logger?.LogInformation("Creating database if missing.");
+        context.Database.EnsureCreated();
 
         logger?.LogInformation("Updating database started.");
 
-        using (var command = new SqliteCommand(SqlQueries.PragmaStatements, connection))
-            await command.ExecuteNonQueryAsync(cancellationToken);
-
-        using var transaction = connection.BeginTransaction();
+        using var transaction = await context.Database.BeginTransactionAsync(cancellationToken);
 
         try
         {
-            await UpdateTable<NameBasics>(connection, transaction, filesToLoad.NameBasics, cancellationToken);
-            await UpdateTable<TitleAkas>(connection, transaction, filesToLoad.TitleAkas, cancellationToken);
-            await UpdateTable<TitleBasics>(connection, transaction, filesToLoad.TitleBasics, cancellationToken);
-            await UpdateTable<TitleCrew>(connection, transaction, filesToLoad.TitleCrew, cancellationToken);
-            await UpdateTable<TitleEpisode>(connection, transaction, filesToLoad.TitleEpisode, cancellationToken);
-            await UpdateTable<TitlePrincipals>(connection, transaction, filesToLoad.TitlePrincipals, cancellationToken);
-            await UpdateTable<TitleRating>(connection, transaction, filesToLoad.TitleRatings, cancellationToken);
+            await UpdateTable<NameBasics>(context, filesToLoad.NameBasics, cancellationToken);
+            await UpdateTable<TitleAkas>(context, filesToLoad.TitleAkas, cancellationToken);
+            await UpdateTable<TitleBasics>(context, filesToLoad.TitleBasics, cancellationToken);
+            await UpdateTable<TitleCrew>(context, filesToLoad.TitleCrew, cancellationToken);
+            await UpdateTable<TitleEpisode>(context, filesToLoad.TitleEpisode, cancellationToken);
+            await UpdateTable<TitlePrincipals>(context, filesToLoad.TitlePrincipals, cancellationToken);
+            await UpdateTable<TitleRating>(context, filesToLoad.TitleRatings, cancellationToken);
 
-            logger?.LogDebug("Committing transaction.");
+            logger?.LogInformation("Committing transaction.");
             await transaction.CommitAsync(cancellationToken);
         }
         catch (Exception)
         {
-            logger?.LogDebug("Rolling back transaction.");
+            logger?.LogInformation("Rolling back transaction.");
             transaction.Rollback();
             throw;
         }
 
         if (settings.VacuumDatabase)
-            await VacuumDatabase(connection, cancellationToken);
+        {
+            const string vacuumCommandText = "VACUUM";
+            logger?.LogInformation(@"Executing {vacuumCommandText} command.", vacuumCommandText);
+            await context.Database.ExecuteSqlRawAsync(vacuumCommandText, cancellationToken);
+        }
 
         logger.LogInformation("Updating database completed.");
     }
 
-    private async Task CreateTablesIfMissing(SqliteConnection connection, CancellationToken cancellationToken)
+    private async Task UpdateTable<T>(ImdbContext context, string fileToLoad, CancellationToken cancellationToken) where T : class, new()
     {
-        logger?.LogDebug(@"Creating missing database tables started.");
+        var tableName = context.Model.FindEntityType(typeof(T)).GetSchemaQualifiedTableName();
 
-        using var command = new SqliteCommand(SqlQueries.CreateMissingImdbTables, connection);
-        await command.ExecuteNonQueryAsync(cancellationToken);
-
-        logger?.LogDebug(@"Creating missing database tables completed.");
-    }
-
-    private async Task UpdateTable<T>(SqliteConnection connection, SqliteTransaction transaction, string fileToLoad, CancellationToken cancellationToken) where T : class, new()
-    {
-        string tableName = GetTableName<T>();
-        string sqlQuery = string.Format("INSERT INTO [{0}] VALUES ({1})", tableName, string.Join(",", from s in typeof(T).GetProperties()
-                                                                                                      select "@" + s.Name));
         logger.LogInformation("Updating {tableName} table started.", tableName);
 
-        using (var command = new SqliteCommand())
+        await context.Set<T>().BatchDeleteAsync(cancellationToken);
+
+        var records = new List<T>();
+        int recordsCount = 0;
+        int recordsTotalCount = 0;
+        var bulkConfig = new BulkConfig { BatchSize = settings.BatchSize };
+
+        async Task BulkInsertRecordsAsync()
         {
-            command.Connection = connection;
-            command.Transaction = transaction;
-            command.CommandText = "DELETE FROM [" + tableName + "]";
-            await command.ExecuteNonQueryAsync(cancellationToken);
+            await context.BulkInsertAsync(
+                entities: records,
+                bulkConfig: bulkConfig,
+                cancellationToken: cancellationToken);
+
+            recordsTotalCount += recordsCount;
+            recordsCount = 0;
+            records.Clear();
+
+            logger.LogDebug("Saving changes ({recordsTotalCount} entires processed).", recordsTotalCount);
         }
 
-        int count = 0;
+        using var csvReader = GetCsvReader(fileToLoad);
 
-        using (var command = new SqliteCommand(sqlQuery, connection, transaction))
-        using (var csvReader = GetCsvReader(fileToLoad))
+        while (await csvReader.ReadAsync())
         {
-            while (await csvReader.ReadAsync())
-            {
-                var record = csvReader.GetRecord<T>();
+            var record = csvReader.GetRecord<T>();
+            records.Add(record);
 
-                command.Parameters.Clear();
-                command.Parameters.AddRange(from s in typeof(T).GetProperties()
-                                            select new SqliteParameter(s.Name, s.GetValue(record) ?? DBNull.Value));
-
-                await command.ExecuteNonQueryAsync(cancellationToken);
-
-                int num = count + 1;
-                count = num;
-
-                if (num % 100000 == 0)
-                    logger.LogDebug("Saving changes ({count} entires processed)", count);
-            }
+            if (++recordsCount % settings.BatchSize == 0)
+                await BulkInsertRecordsAsync();
         }
+
+        await BulkInsertRecordsAsync();
 
         logger.LogInformation("Updating {tableName} table completed.", tableName);
-    }
-
-    private async Task VacuumDatabase(SqliteConnection connection, CancellationToken cancellationToken)
-    {
-        const string vacuumCommandText = "VACUUM";
-
-        logger?.LogInformation(@"Executing {vacuumCommandText} command started.", vacuumCommandText);
-
-        using var command = new SqliteCommand(SqlQueries.Vacuum, connection);
-        await command.ExecuteNonQueryAsync(cancellationToken);
-
-        logger?.LogInformation(@"Executing {vacuumCommandText} command completed.", vacuumCommandText);
-    }
-
-    private static string GetTableName<T>()
-    {
-        return typeof(T).Name switch
-        {
-            nameof(NameBasics) => "name.basics",
-            nameof(TitleAkas) => "title.akas",
-            nameof(TitleBasics) => "title.basics",
-            nameof(TitleCrew) => "title.crew",
-            nameof(TitleEpisode) => "title.episodes",
-            nameof(TitlePrincipals) => "title.principals",
-            nameof(TitleRating) => "title.ratings",
-            _ => throw new NotSupportedException("There is no database table for given model."),
-        };
     }
 
     private CsvReader GetCsvReader(string fileNamePath)

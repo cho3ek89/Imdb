@@ -27,7 +27,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\Imdb.Models\Imdb.Models.csproj" />
+		<ProjectReference Include="..\Imdb.Common\Imdb.Common.csproj" />
 	</ItemGroup>
 
 </Project>

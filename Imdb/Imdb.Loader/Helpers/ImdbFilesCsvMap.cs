@@ -1,6 +1,6 @@
 ﻿using CsvHelper.Configuration;
 
-using Imdb.Models;
+using Imdb.Common.Models;
 
 using System.Globalization;
 

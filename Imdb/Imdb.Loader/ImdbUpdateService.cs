@@ -21,10 +21,8 @@ public class ImdbUpdateService : IImdbUpdateService
         this.logger = logger;
     }
 
-    public async Task UpdateDatabase()
-    {
+    public async Task UpdateDatabase() =>
         await UpdateDatabase(CancellationToken.None);
-    }
 
     public async Task UpdateDatabase(CancellationToken cancellationToken)
     {
@@ -89,7 +87,7 @@ public class ImdbUpdateService : IImdbUpdateService
             return fullFilePath;
         }
 
-        return new ImdbFiles
+        return new()
         {
             NameBasics = GetFileToLoad(filesToDownload.NameBasics),
             TitleAkas = GetFileToLoad(filesToDownload.TitleAkas),

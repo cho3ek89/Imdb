@@ -1,5 +1,5 @@
-﻿using Imdb.DbContexts;
-using Imdb.Models;
+﻿using Imdb.Common.DbContexts;
+using Imdb.Common.Models;
 
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Query;
