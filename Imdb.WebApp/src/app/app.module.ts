@@ -16,9 +16,9 @@ import { TitleEpisodesGridComponent } from './grid-children/title-episodes-grid.
 import { TitlePrincipalsGridComponent } from './grid-children/title-principals-grid.component';
 import { TitleRatingsGridComponent } from './grid-children/title-ratings-grid.component';
 
-import { AgGridOptionsService } from 'src/services/ag-grid-options.service';
-import { ConfigService } from 'src/services/config.service';
-import { DataService } from 'src/services/data.service';
+import { AgGridOptionsService } from './services/ag-grid-options.service';
+import { ConfigService } from './services/config.service';
+import { DataService } from './services/data.service';
 
 function appInitializerFactory(configService: ConfigService) {
   return () => configService.loadConfiguration('./assets/appsettings.json');

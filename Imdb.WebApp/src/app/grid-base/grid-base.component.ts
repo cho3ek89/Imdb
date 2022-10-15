@@ -5,8 +5,8 @@ import { AgGridAngular } from 'ag-grid-angular';
 import { ColDef, GridOptions, IGetRowsParams } from 'ag-grid-community';
 import { ToastrService } from 'ngx-toastr';
 
-import { AgGridOptionsService } from 'src/services/ag-grid-options.service';
-import { DataService } from 'src/services/data.service';
+import { AgGridOptionsService } from '../services/ag-grid-options.service';
+import { DataService } from '../services/data.service';
 
 @Component({
   selector: 'grid-base',
@@ -33,7 +33,7 @@ export abstract class GridBaseComponent {
 
         this.getData(params).subscribe({
           next: result => {
-            params.successCallback(result.Result, result.Count);
+            params.successCallback(result['value'], result['@odata.count']);
 
             if (result.count == 0)
               this.gridOptions.api?.showNoRowsOverlay();

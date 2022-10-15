@@ -4,8 +4,8 @@ import { Observable } from 'rxjs';
 import { ColDef, IGetRowsParams } from 'ag-grid-community';
 import { ToastrService } from 'ngx-toastr';
 
-import { AgGridOptionsService } from 'src/services/ag-grid-options.service';
-import { DataService } from 'src/services/data.service';
+import { AgGridOptionsService } from '../services/ag-grid-options.service';
+import { DataService } from '../services/data.service';
 import { GridBaseComponent } from '../grid-base/grid-base.component';
 
 @Component({

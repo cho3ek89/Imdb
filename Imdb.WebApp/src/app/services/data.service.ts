@@ -11,6 +11,7 @@ import { ConfigService } from './config.service';
   providedIn: 'root'
 })
 export class DataService {
+  private readonly routePrefix: string = 'ImDb';
   private url: string;
 
   constructor(private http: HttpClient, configService: ConfigService) {
@@ -18,19 +19,19 @@ export class DataService {
     this.url = config.apiUrl;
   }
 
-  getNameBasics = (params: IGetRowsParams) => this.getData(params, 'name-basics');
+  getNameBasics = (params: IGetRowsParams) => this.getData(params, `${this.routePrefix}/NameBasics`);
 
-  getTitleAkas = (params: IGetRowsParams) => this.getData(params, 'title-akas');
+  getTitleAkas = (params: IGetRowsParams) => this.getData(params, `${this.routePrefix}/TitleAkas`);
 
-  getTitleBasics = (params: IGetRowsParams) => this.getData(params, 'title-basics');
+  getTitleBasics = (params: IGetRowsParams) => this.getData(params, `${this.routePrefix}/TitleBasics`);
 
-  getTitleCrew = (params: IGetRowsParams) => this.getData(params, 'title-crew');
+  getTitleCrew = (params: IGetRowsParams) => this.getData(params, `${this.routePrefix}/TitleCrew`);
 
-  getTitleEpisodes = (params: IGetRowsParams) => this.getData(params, 'title-episodes');
+  getTitleEpisodes = (params: IGetRowsParams) => this.getData(params, `${this.routePrefix}/TitleEpisode`);
 
-  getTitlePrincipals = (params: IGetRowsParams) => this.getData(params, 'title-principals');
+  getTitlePrincipals = (params: IGetRowsParams) => this.getData(params, `${this.routePrefix}/TitlePrincipals`);
 
-  getTitleRatings = (params: IGetRowsParams) => this.getData(params, 'title-ratings');
+  getTitleRatings = (params: IGetRowsParams) => this.getData(params, `${this.routePrefix}/TitleRating`);
 
   private getData(params: IGetRowsParams, route: string) {
     let query = this.getQuery(params);
