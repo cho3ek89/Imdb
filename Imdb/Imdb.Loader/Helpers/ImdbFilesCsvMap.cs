@@ -15,8 +15,7 @@ public sealed class ImdbFilesCsvMap
             Map((NameBasics m) => m.NameId).Name("nconst").Convert(c => GetId(c.Row.GetField("nconst")));
             Map((NameBasics m) => m.Name).Name("primaryName").Convert(c => GetString(c.Row.GetField("primaryName")));
             Map((NameBasics m) => m.BirthYear).Name("birthYear").Convert(c => GetNumber(c.Row.GetField("birthYear")));
-            Map((NameBasics m) => m.BirthYear).Name("deathYear").Convert(c => GetNumber(c.Row.GetField("deathYear")));
-            Map((NameBasics m) => m.Professions).Name("primaryProfession").Convert(c => GetString(c.Row.GetField("primaryProfession")));
+            Map((NameBasics m) => m.DeathYear).Name("deathYear").Convert(c => GetNumber(c.Row.GetField("deathYear")));
             Map((NameBasics m) => m.Professions).Name("primaryProfession").Convert(c => GetString(c.Row.GetField("primaryProfession")));
             Map((NameBasics m) => m.KnownForTitleIds).Name("knownForTitles").Convert(c => GetIds(c.Row.GetField("knownForTitles")));
         }
