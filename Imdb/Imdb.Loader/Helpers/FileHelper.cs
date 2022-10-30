@@ -19,7 +19,7 @@ public static class FileHelper
         var bufferSize = 4096;
         var buffer = new byte[bufferSize];
 
-        var bytesRead = responseStream.Read(buffer, 0, bufferSize);
+        var bytesRead = await responseStream.ReadAsync(buffer.AsMemory(0, bufferSize), cancellationToken);
 
         while (bytesRead > 0)
         {
@@ -41,7 +41,7 @@ public static class FileHelper
         var bufferSize = 4096;
         var buffer = new byte[bufferSize];
 
-        var bytesRead = decompressionStream.Read(buffer, 0, bufferSize);
+        var bytesRead = await decompressionStream.ReadAsync(buffer.AsMemory(0, bufferSize), cancellationToken);
 
         while (bytesRead > 0)
         {
