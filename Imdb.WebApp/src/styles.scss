@@ -1,4 +1,7 @@
-@import "../node_modules/ag-grid-community/dist/styles/ag-grid.css";
-@import "../node_modules/ag-grid-community/dist/styles/ag-theme-alpine-dark.css";
+@import "../node_modules/@angular/material/prebuilt-themes/indigo-pink.css";
 
-@import 'ngx-toastr/toastr';
+@import "../node_modules/ag-grid-community/dist/styles/ag-grid.css";
+@import "../node_modules/ag-grid-community/dist/styles/ag-theme-alpine.css";
+
+html, body, main { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

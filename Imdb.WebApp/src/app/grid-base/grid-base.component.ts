@@ -1,9 +1,10 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { AgGridAngular } from 'ag-grid-angular';
 import { ColDef, GridOptions, IGetRowsParams } from 'ag-grid-community';
-import { ToastrService } from 'ngx-toastr';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { AgGridOptionsService } from '../services/ag-grid-options.service';
 import { DataService } from '../services/data.service';
@@ -17,7 +18,7 @@ export abstract class GridBaseComponent {
   gridOptions: GridOptions;
   rowData: any;
 
-  constructor(protected dataService: DataService, agGridOptionsService: AgGridOptionsService, private toastrService: ToastrService) {
+  constructor(protected dataService: DataService, agGridOptionsService: AgGridOptionsService, private snackBar: MatSnackBar) {
     this.gridOptions = agGridOptionsService.getGridOptions();
     this.gridOptions.columnDefs = this.getGridColumnDefs();
   }
@@ -40,11 +41,14 @@ export abstract class GridBaseComponent {
             else
               this.gridOptions.api?.hideOverlay();
           },
-          error: error => {
+          error: (error: HttpErrorResponse) => {
             this.gridOptions.api?.showNoRowsOverlay();
 
             console.error(error.error);
-            this.toastrService.error(error.error.detail, error.error.title);
+            this.snackBar.open(
+              `${error.error.title}: ${error.error.detail}`, 
+              'CLOSE', 
+              { duration: 4000, horizontalPosition: 'end' });
           }
         });
       }
