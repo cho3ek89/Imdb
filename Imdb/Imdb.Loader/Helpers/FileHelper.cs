@@ -4,6 +4,20 @@ namespace Imdb.Loader.Helpers;
 
 public static class FileHelper
 {
+    private static readonly HttpClient httpClient;
+
+    private const int BufferSize = 4096;
+
+    static FileHelper()
+    {
+        var socketsHttpHandler = new SocketsHttpHandler
+        {
+            PooledConnectionLifetime = TimeSpan.FromMinutes(2)
+        };
+
+        httpClient = new HttpClient(socketsHttpHandler);
+    }
+
     public static async Task DownloadFile(Uri fileToDownload, string fileDownloaded) =>
         await DownloadFile(fileToDownload, fileDownloaded, CancellationToken.None);
 
@@ -12,20 +26,10 @@ public static class FileHelper
         if (!Uri.IsWellFormedUriString(fileToDownload.ToString(), UriKind.Absolute))
             throw new ArgumentException("Invalid file url has been provided!");
 
-        using var client = new HttpClient();
-        using var responseStream = await client.GetStreamAsync(fileToDownload, cancellationToken);
-        using var fileStream = new FileStream(fileDownloaded, FileMode.CreateNew);
+        using var responseStream = await httpClient.GetStreamAsync(fileToDownload, cancellationToken);
+        using var writeStream = new FileStream(fileDownloaded, FileMode.CreateNew);
 
-        var bufferSize = 4096;
-        var buffer = new byte[bufferSize];
-
-        var bytesRead = await responseStream.ReadAsync(buffer.AsMemory(0, bufferSize), cancellationToken);
-
-        while (bytesRead > 0)
-        {
-            await fileStream.WriteAsync(buffer.AsMemory(0, bytesRead), cancellationToken);
-            bytesRead = await responseStream.ReadAsync(buffer.AsMemory(0, bufferSize), cancellationToken);
-        }
+        await responseStream.CopyToAsync(writeStream, BufferSize, cancellationToken);
     }
 
     public static async Task DecompressGZipArchive(string fileToDecompress) => 
@@ -35,19 +39,10 @@ public static class FileHelper
     {
         using var readStream = new FileStream(fileToDecompress, FileMode.Open);
         var decompressedFile = Path.Combine(Path.GetDirectoryName(fileToDecompress), Path.GetFileNameWithoutExtension(fileToDecompress));
-        using var writeStream = new FileStream(decompressedFile, FileMode.CreateNew);
         using var decompressionStream = new GZipStream(readStream, CompressionMode.Decompress);
+        using var writeStream = new FileStream(decompressedFile, FileMode.CreateNew);
 
-        var bufferSize = 4096;
-        var buffer = new byte[bufferSize];
-
-        var bytesRead = await decompressionStream.ReadAsync(buffer.AsMemory(0, bufferSize), cancellationToken);
-
-        while (bytesRead > 0)
-        {
-            await writeStream.WriteAsync(buffer.AsMemory(0, bytesRead), cancellationToken);
-            bytesRead = await decompressionStream.ReadAsync(buffer.AsMemory(0, bufferSize), cancellationToken);
-        }
+        await decompressionStream.CopyToAsync(writeStream, BufferSize, cancellationToken);
     }
 
     public static async Task DeleteDirectory(string directoryPath, int numberOfAttempts = 15, int delayMiliseconds = 30)
