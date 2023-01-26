@@ -44,6 +44,8 @@ public class ImdbUpdateService : IImdbUpdateService
             if (!Directory.Exists(downloadLocation))
                 Directory.CreateDirectory(downloadLocation);
 
+            logger.LogInformation("Downloading and unpacking files started.");
+
             foreach (var fileToDownload in filesToDownload)
             {
                 logger.LogInformation("Downloading {fileToDownload}", fileToDownload);
@@ -52,6 +54,8 @@ public class ImdbUpdateService : IImdbUpdateService
                 logger.LogInformation("Unpacking {fileToDownload}", fileToDownload);
                 await FileHelper.DecompressGZipArchive(Path.Combine(downloadLocation, fileToDownload), cancellationToken);
             }
+
+            logger.LogInformation("Downloading and unpacking files completed.");
 
             var filesToLoad = GetFilesToLoad(settings.DownloadLocation, settings.FilesToDownload);
             await iDbRepository.UpdateDatabase(filesToLoad, cancellationToken);
