@@ -49,6 +49,7 @@ jobs:
           cat appsettings.json | \
           jq '.ConnectionStrings.ImDb = "Data Source=../Databases/imdb.db3;"' | \
           jq '.Serilog.MinimumLevel.Default = "Information"' | \
+          jq '.Serilog.MinimumLevel.Override = { "Microsoft.EntityFrameworkCore.Database.Command": "Warning" }' | \
           jq '(.Serilog.WriteTo[] | select(.Name == "File") | .Args.path) |= "../Logs/Imdb.txt"' \
           > temp.json && mv temp.json appsettings.json
 
@@ -57,6 +58,7 @@ jobs:
           cat appsettings.json | \
           jq '.ConnectionStrings.ImDb = "Data Source=../Databases/imdb.db3;"' | \
           jq '.Serilog.MinimumLevel.Default = "Information"' | \
+          jq '.Serilog.MinimumLevel.Override = { "Microsoft.EntityFrameworkCore.Database.Command": "Warning" }' | \
           jq '(.Serilog.WriteTo[] | select(.Name == "File") | .Args.path) |= "../Logs/Imdb.Loader.txt"' \
           > temp.json && mv temp.json appsettings.json
           cd ../..
