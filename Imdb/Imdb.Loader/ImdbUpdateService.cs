@@ -44,29 +44,29 @@ public class ImdbUpdateService : IImdbUpdateService
             if (!Directory.Exists(downloadLocation))
                 Directory.CreateDirectory(downloadLocation);
 
-            logger.LogInformation("Downloading and unpacking files started.");
+            logger?.LogInformation("Downloading and unpacking files started.");
 
             foreach (var fileToDownload in filesToDownload)
             {
-                logger.LogInformation("Downloading {fileToDownload}", fileToDownload);
+                logger?.LogInformation("Downloading {fileToDownload}", fileToDownload);
                 await FileHelper.DownloadFile(new Uri(sourceUrl, fileToDownload), Path.Combine(downloadLocation, fileToDownload), cancellationToken);
 
-                logger.LogInformation("Unpacking {fileToDownload}", fileToDownload);
+                logger?.LogInformation("Unpacking {fileToDownload}", fileToDownload);
                 await FileHelper.DecompressGZipArchive(Path.Combine(downloadLocation, fileToDownload), cancellationToken);
             }
 
-            logger.LogInformation("Downloading and unpacking files completed.");
+            logger?.LogInformation("Downloading and unpacking files completed.");
 
             var filesToLoad = GetFilesToLoad(settings.DownloadLocation, settings.FilesToDownload);
             await iDbRepository.UpdateDatabase(filesToLoad, cancellationToken);
         }
         catch (OperationCanceledException)
         {
-            logger.LogWarning("An operation has been cancelled.");
+            logger?.LogWarning("An operation has been cancelled.");
         }
         catch (Exception ex)
         {
-            logger.LogError(ex, "An error occured.");
+            logger?.LogError(ex, "An error occured.");
         }
         finally
         {
@@ -76,7 +76,7 @@ public class ImdbUpdateService : IImdbUpdateService
             }
             catch (Exception ex)
             {
-                logger.LogWarning(ex, "{downloadLocation} directory cleanup failed.", downloadLocation);
+                logger?.LogWarning(ex, "{downloadLocation} directory cleanup failed.", downloadLocation);
             }
         }
     }

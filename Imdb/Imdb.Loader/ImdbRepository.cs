@@ -69,14 +69,14 @@ public class ImdbRepository : IImdbRepository
             await context.Database.ExecuteSqlRawAsync(vacuumCommandText, cancellationToken);
         }
 
-        logger.LogInformation("Updating database completed.");
+        logger?.LogInformation("Updating database completed.");
     }
 
     private async Task UpdateTable<T>(ImdbContext context, string fileToLoad, CancellationToken cancellationToken) where T : class, new()
     {
         var tableName = context.Model.FindEntityType(typeof(T)).GetSchemaQualifiedTableName();
 
-        logger.LogInformation("Updating {tableName} table started.", tableName);
+        logger?.LogInformation("Updating {tableName} table started.", tableName);
 
         await context.Set<T>().BatchDeleteAsync(cancellationToken);
 
@@ -96,7 +96,7 @@ public class ImdbRepository : IImdbRepository
             recordsCount = 0;
             records.Clear();
 
-            logger.LogDebug("Saving changes ({recordsTotalCount} entires processed).", recordsTotalCount);
+            logger?.LogDebug("Saving changes ({recordsTotalCount} entires processed).", recordsTotalCount);
         }
 
         using var csvReader = GetCsvReader(fileToLoad);
@@ -112,7 +112,7 @@ public class ImdbRepository : IImdbRepository
 
         await BulkInsertRecordsAsync();
 
-        logger.LogInformation("Updating {tableName} table completed.", tableName);
+        logger?.LogInformation("Updating {tableName} table completed.", tableName);
     }
 
     private CsvReader GetCsvReader(string fileNamePath)
@@ -120,7 +120,7 @@ public class ImdbRepository : IImdbRepository
         var csvReaderConfig = new CsvConfiguration(CultureInfo.InvariantCulture)
         {
             BadDataFound = new BadDataFound(a =>
-                logger.LogWarning("Corrupted row has been found: {NewLine}{RawRecord}", Environment.NewLine, a.RawRecord)),
+                logger?.LogWarning("Corrupted row has been found: {NewLine}{RawRecord}", Environment.NewLine, a.RawRecord)),
 
             Delimiter = "\t",
             HasHeaderRecord = true,
