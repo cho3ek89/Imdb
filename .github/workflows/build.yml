@@ -44,7 +44,7 @@ jobs:
 
       - name: Update settings
         run: |
-          # Updating database and logging setting of Imdb.Loader project.
+          # Updating database and logging setting of Imdb project.
           cd binaries/Imdb
           cat appsettings.json | \
           jq '.ConnectionStrings.ImDb = "Data Source=../Databases/imdb.db3;"' | \
@@ -52,10 +52,10 @@ jobs:
           jq '(.Serilog.WriteTo[] | select(.Name == "File") | .Args.path) |= "../Logs/Imdb.txt"' \
           > temp.json && mv temp.json appsettings.json
 
-          # Updating database and logging setting of Imdb project.
+          # Updating database and logging setting of Imdb.Loader project.
           cd ../Imdb.Loader
           cat appsettings.json | \
-          jq '.DatabaseSettings.ConnectionString = "Data Source=../Databases/imdb.db3;"' | \
+          jq '.ConnectionStrings.ImDb = "Data Source=../Databases/imdb.db3;"' | \
           jq '.Serilog.MinimumLevel.Default = "Information"' | \
           jq '(.Serilog.WriteTo[] | select(.Name == "File") | .Args.path) |= "../Logs/Imdb.Loader.txt"' \
           > temp.json && mv temp.json appsettings.json

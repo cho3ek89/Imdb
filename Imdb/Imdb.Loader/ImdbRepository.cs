@@ -5,7 +5,6 @@ using EFCore.BulkExtensions;
 
 using Imdb.Common.Models;
 using Imdb.Common.DbContexts;
-using Imdb.Loader.Helpers;
 using Imdb.Loader.Options;
 
 using Microsoft.EntityFrameworkCore;
@@ -18,12 +17,15 @@ namespace Imdb.Loader;
 
 public class ImdbRepository : IImdbRepository
 {
+    private readonly ImdbContext context;
+
     private readonly DatabaseSettings settings;
 
     private readonly ILogger<ImdbRepository> logger;
 
-    public ImdbRepository(IOptions<DatabaseSettings> settings, ILogger<ImdbRepository> logger)
+    public ImdbRepository(ImdbContext context, IOptions<DatabaseSettings> settings, ILogger<ImdbRepository> logger)
     {
+        this.context = context;
         this.settings = settings.Value;
         this.logger = logger;
     }
@@ -33,12 +35,6 @@ public class ImdbRepository : IImdbRepository
 
     public async Task UpdateDatabase(ImdbFiles filesToLoad, CancellationToken cancellationToken)
     {
-        var optionsBuilder = new DbContextOptionsBuilder<ImdbContext>()
-            .UseSqlite(settings.ConnectionString)
-            .UseQueryTrackingBehavior(QueryTrackingBehavior.TrackAll);
-
-        using var context = new ImdbContext(optionsBuilder.Options);
-
         logger?.LogInformation("Creating database if missing.");
         context.Database.EnsureCreated();
 

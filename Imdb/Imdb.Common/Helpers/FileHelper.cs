@@ -1,6 +1,6 @@
 ﻿using System.IO.Compression;
 
-namespace Imdb.Loader.Helpers;
+namespace Imdb.Common.Helpers;
 
 public static class FileHelper
 {
