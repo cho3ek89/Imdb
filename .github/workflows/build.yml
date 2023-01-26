@@ -56,6 +56,7 @@ jobs:
           # Updating database and logging setting of Imdb.Loader project.
           cd ../Imdb.Loader
           cat appsettings.json | \
+          jq '.DownloadSettings.DownloadLocation = "../.DownloadedImdb"' | \
           jq '.ConnectionStrings.ImDb = "Data Source=../Databases/imdb.db3;"' | \
           jq '.Serilog.MinimumLevel.Default = "Information"' | \
           jq '.Serilog.MinimumLevel.Override = { "Microsoft.EntityFrameworkCore.Database.Command": "Warning" }' | \
