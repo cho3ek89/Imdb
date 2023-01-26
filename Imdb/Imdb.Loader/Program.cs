@@ -57,6 +57,7 @@ static IServiceProvider GetServiceProvider()
         options.ReplaceService<IRelationalCommandBuilderFactory, SqliteRelationalCommandBuilderFactory>();
     }, ServiceLifetime.Singleton);
 
+    serviceCollection.AddSingleton<IImdbFilesProvider, ImdbFilesProvider>();
     serviceCollection.AddSingleton<IImdbRepository, ImdbRepository>();
     serviceCollection.AddSingleton<IImdbUpdateService, ImdbUpdateService>();
 
