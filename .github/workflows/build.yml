@@ -14,7 +14,7 @@ jobs:
       version: 1.0.0.0
     strategy:
       matrix:
-        runtime: [linux-x64, win10-x64]
+        runtime: [linux-x64, win-x64]
     steps:
       - name: Checkout
         uses: actions/checkout@v3.3.0
@@ -30,10 +30,10 @@ jobs:
           node-version: '19.x'
 
       - name: Build Imdb
-        run: dotnet publish 'Imdb/Imdb/Imdb.csproj' -o 'binaries/Imdb' -c 'Release' -r '${{ matrix.runtime }}' -v 'normal' --self-contained true -p:PublishReadyToRun=true -p:PublishTrimmed=false -p:TrimMode=Link -p:Version=${{ env.version }}
+        run: dotnet publish 'Imdb/Imdb/Imdb.csproj' -o 'binaries/Imdb' -c 'Release' -r '${{ matrix.runtime }}' -v 'normal' --self-contained true -p:PublishReadyToRunComposite=true -p:Version=${{ env.version }}
 
       - name: Build Imdb.Loader
-        run: dotnet publish 'Imdb/Imdb.Loader/Imdb.Loader.csproj' -o 'binaries/Imdb.Loader' -c 'Release' -r '${{ matrix.runtime }}' -v 'normal' --self-contained true -p:PublishReadyToRun=true -p:PublishTrimmed=false -p:TrimMode=Link -p:Version=${{ env.version }}
+        run: dotnet publish 'Imdb/Imdb.Loader/Imdb.Loader.csproj' -o 'binaries/Imdb.Loader' -c 'Release' -r '${{ matrix.runtime }}' -v 'normal' --self-contained true -p:PublishReadyToRunComposite=true -p:Version=${{ env.version }}
 
       - name: Build Imdb.WebApp
         run: |
