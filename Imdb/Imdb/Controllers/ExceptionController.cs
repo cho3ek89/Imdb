@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 
-using System.Net;
-
 namespace Imdb.Controllers;
 
 [ApiController]
@@ -20,9 +18,10 @@ public class ExceptionController : ControllerBase
     public IActionResult HandleException()
     {
         var exception = HttpContext.Features.Get<IExceptionHandlerFeature>().Error;
+        var statusCode = HttpContext.Response.StatusCode;
 
         logger?.LogError(exception, "An exception has occurred while executing the request.");
 
-        return Problem(detail: exception.Message, statusCode: (int)HttpStatusCode.BadRequest);
+        return Problem(detail: exception.Message, statusCode: statusCode);
     }
 }
