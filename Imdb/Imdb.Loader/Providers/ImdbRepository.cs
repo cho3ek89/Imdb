@@ -3,9 +3,9 @@ using CsvHelper.Configuration;
 
 using EFCore.BulkExtensions;
 
-using Imdb.Common.Models;
 using Imdb.Common.DbContexts;
-using Imdb.Loader.Options;
+using Imdb.Common.Models;
+using Imdb.Loader.Models;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -13,7 +13,7 @@ using Microsoft.Extensions.Options;
 
 using System.Globalization;
 
-namespace Imdb.Loader;
+namespace Imdb.Loader.Providers;
 
 public class ImdbRepository : IImdbRepository
 {
@@ -30,7 +30,7 @@ public class ImdbRepository : IImdbRepository
         this.logger = logger;
     }
 
-    public async Task UpdateDatabase(ImdbFiles filesToLoad) => 
+    public async Task UpdateDatabase(ImdbFiles filesToLoad) =>
         await UpdateDatabase(filesToLoad, CancellationToken.None);
 
     public async Task UpdateDatabase(ImdbFiles filesToLoad, CancellationToken cancellationToken)

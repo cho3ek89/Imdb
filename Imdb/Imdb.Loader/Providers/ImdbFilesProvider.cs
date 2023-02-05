@@ -1,18 +1,19 @@
 ﻿using Imdb.Common.Helpers;
-using Imdb.Loader.Options;
+using Imdb.Loader.Models;
+using Imdb.Loader.Services;
 
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace Imdb.Loader
+namespace Imdb.Loader.Providers
 {
     public class ImdbFilesProvider : IImdbFilesProvider
     {
         private readonly DownloadSettings settings;
 
-        private readonly ILogger<ImdbUpdateService> logger;
+        private readonly ILogger<ImdbLoadingService> logger;
 
-        public ImdbFilesProvider(IOptions<DownloadSettings> settings, ILogger<ImdbUpdateService> logger)
+        public ImdbFilesProvider(IOptions<DownloadSettings> settings, ILogger<ImdbLoadingService> logger)
         {
             this.settings = settings.Value;
             this.logger = logger;

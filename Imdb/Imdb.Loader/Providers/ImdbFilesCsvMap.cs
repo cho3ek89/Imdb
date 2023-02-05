@@ -4,7 +4,7 @@ using Imdb.Common.Models;
 
 using System.Globalization;
 
-namespace Imdb.Loader;
+namespace Imdb.Loader.Providers;
 
 public sealed class ImdbFilesCsvMap
 {

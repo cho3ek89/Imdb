@@ -1,16 +1,18 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Imdb.Loader.Providers;
 
-namespace Imdb.Loader;
+using Microsoft.Extensions.Logging;
 
-public class ImdbUpdateService : IImdbUpdateService
+namespace Imdb.Loader.Services;
+
+public class ImdbLoadingService : IImdbLoadingService
 {
     private readonly IImdbFilesProvider imdbFilesProvider;
 
     private readonly IImdbRepository imdbRepository;
 
-    private readonly ILogger<ImdbUpdateService> logger;
+    private readonly ILogger<ImdbLoadingService> logger;
 
-    public ImdbUpdateService(IImdbFilesProvider imdbFilesProvider, IImdbRepository imdbRepository, ILogger<ImdbUpdateService> logger)
+    public ImdbLoadingService(IImdbFilesProvider imdbFilesProvider, IImdbRepository imdbRepository, ILogger<ImdbLoadingService> logger)
     {
         this.imdbFilesProvider = imdbFilesProvider;
         this.imdbRepository = imdbRepository;

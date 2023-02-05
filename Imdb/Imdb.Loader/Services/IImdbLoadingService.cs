@@ -1,6 +1,6 @@
-﻿namespace Imdb.Loader;
+﻿namespace Imdb.Loader.Services;
 
-public interface IImdbUpdateService
+public interface IImdbLoadingService
 {
     Task UpdateDatabase();
 

@@ -1,4 +1,4 @@
-﻿namespace Imdb.Loader.Options;
+﻿namespace Imdb.Loader.Models;
 
 public class ImdbFiles
 {

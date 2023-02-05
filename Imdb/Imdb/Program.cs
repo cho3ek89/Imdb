@@ -8,9 +8,9 @@ using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Host.UseSerilog((context, loggerConfig) =>
+builder.Host.UseSerilog((context, options) =>
 {
-    loggerConfig.ReadFrom.Configuration(context.Configuration);
+    options.ReadFrom.Configuration(context.Configuration);
 });
 
 builder.Services.AddControllers()

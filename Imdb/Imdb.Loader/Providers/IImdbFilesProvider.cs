@@ -1,6 +1,6 @@
-﻿using Imdb.Loader.Options;
+﻿using Imdb.Loader.Models;
 
-namespace Imdb.Loader
+namespace Imdb.Loader.Providers
 {
     public interface IImdbFilesProvider
     {

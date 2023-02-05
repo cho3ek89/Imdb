@@ -1,65 +1,50 @@
 ﻿using Imdb.Common.DbContexts;
 using Imdb.Common.DbContexts.Utilities;
-using Imdb.Loader;
-using Imdb.Loader.Options;
+using Imdb.Loader.Models;
+using Imdb.Loader.Providers;
+using Imdb.Loader.Services;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Hosting;
 
 using Serilog;
 
-using System.Diagnostics;
-
-var requiredService = GetServiceProvider().GetRequiredService<IImdbUpdateService>();
-var cancellationSource = new CancellationTokenSource();
-
-Console.CancelKeyPress += delegate (object sender, ConsoleCancelEventArgs e)
-{
-    e.Cancel = true;
-    cancellationSource.Cancel();
-};
-
-await requiredService.UpdateDatabase(cancellationSource.Token);
-
-static IServiceProvider GetServiceProvider()
-{
-    var config = new ConfigurationBuilder()
-        .AddJsonFile("appsettings.json")
-        .Build();
-
-    var serviceCollection = new ServiceCollection();
-
-    serviceCollection.AddLogging(loggingBuilder =>
+await Host.CreateDefaultBuilder(args)
+    .ConfigureHostConfiguration(options => 
     {
-        loggingBuilder.ClearProviders();
-
-        var logger = new LoggerConfiguration().ReadFrom.Configuration(config).CreateLogger();
-        loggingBuilder.AddSerilog(logger, true);
-    });
-
-    serviceCollection.AddOptions();
-
-    serviceCollection.Configure<DatabaseSettings>(options =>
-        config.GetSection("DatabaseSettings").Bind(options));
-
-    serviceCollection.Configure<DownloadSettings>(options =>
-        config.GetSection("DownloadSettings").Bind(options));
-
-    serviceCollection.AddDbContext<ImdbContext>(options =>
+        options.AddJsonFile("appsettings.json");
+    })
+    .UseSerilog((context, options) =>
     {
-        options.UseSqlite(config.GetConnectionString("ImDb"));
-        options.EnableDetailedErrors();
-        options.EnableSensitiveDataLogging(Debugger.IsAttached);
-        options.UseQueryTrackingBehavior(QueryTrackingBehavior.TrackAll);
-        options.ReplaceService<IRelationalCommandBuilderFactory, SqliteRelationalCommandBuilderFactory>();
-    }, ServiceLifetime.Singleton);
+        options.ReadFrom.Configuration(context.Configuration);
+    })
+    .ConfigureServices((host, services) =>
+    {
+        services.Configure<ConsoleLifetimeOptions>(options => 
+            options.SuppressStatusMessages = true);
 
-    serviceCollection.AddSingleton<IImdbFilesProvider, ImdbFilesProvider>();
-    serviceCollection.AddSingleton<IImdbRepository, ImdbRepository>();
-    serviceCollection.AddSingleton<IImdbUpdateService, ImdbUpdateService>();
+        services.Configure<DatabaseSettings>(options =>
+            host.Configuration.GetSection("DatabaseSettings").Bind(options));
 
-    return serviceCollection.BuildServiceProvider();
-}
+        services.Configure<DownloadSettings>(options =>
+            host.Configuration.GetSection("DownloadSettings").Bind(options));
+
+        services.AddDbContext<ImdbContext>(options =>
+        {
+            options.UseSqlite(host.Configuration.GetConnectionString("ImDb"));
+            options.EnableDetailedErrors();
+            options.EnableSensitiveDataLogging(host.HostingEnvironment.IsDevelopment());
+            options.UseQueryTrackingBehavior(QueryTrackingBehavior.TrackAll);
+            options.ReplaceService<IRelationalCommandBuilderFactory, SqliteRelationalCommandBuilderFactory>();
+        }, ServiceLifetime.Singleton);
+
+        services.AddSingleton<IImdbFilesProvider, ImdbFilesProvider>();
+        services.AddSingleton<IImdbRepository, ImdbRepository>();
+        services.AddSingleton<IImdbLoadingService, ImdbLoadingService>();
+
+        services.AddHostedService<ImdbLoadingLauncher>();
+    })
+    .RunConsoleAsync();
