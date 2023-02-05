@@ -2,7 +2,6 @@
 using Imdb.Loader.Models;
 using Imdb.Loader.Services;
 
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 namespace Imdb.Loader.Providers

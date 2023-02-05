@@ -6,14 +6,11 @@ using Imdb.Loader.Services;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 
 using Serilog;
 
-await Host.CreateDefaultBuilder(args)
-    .ConfigureHostConfiguration(options => 
+Host.CreateDefaultBuilder(args)
+    .ConfigureHostConfiguration(options =>
     {
         options.AddJsonFile("appsettings.json");
     })
@@ -23,7 +20,7 @@ await Host.CreateDefaultBuilder(args)
     })
     .ConfigureServices((host, services) =>
     {
-        services.Configure<ConsoleLifetimeOptions>(options => 
+        services.Configure<ConsoleLifetimeOptions>(options =>
             options.SuppressStatusMessages = true);
 
         services.Configure<DatabaseSettings>(options =>
@@ -47,4 +44,5 @@ await Host.CreateDefaultBuilder(args)
 
         services.AddHostedService<ImdbLoadingLauncher>();
     })
-    .RunConsoleAsync();
+    .Build()
+    .Run();

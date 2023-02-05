@@ -1,7 +1,5 @@
 ﻿using Imdb.Loader.Providers;
 
-using Microsoft.Extensions.Logging;
-
 namespace Imdb.Loader.Services;
 
 public class ImdbLoadingService : IImdbLoadingService
