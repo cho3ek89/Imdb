@@ -46,8 +46,8 @@ export abstract class GridBaseComponent {
 
             console.error(error.error);
             this.snackBar.open(
-              `${error.error.title}: ${error.error.detail}`, 
-              'CLOSE', 
+              `${error.error.title}: ${error.error.detail}`,
+              'CLOSE',
               { duration: 4000, horizontalPosition: 'end' });
           }
         });

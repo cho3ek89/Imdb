@@ -1,28 +1,28 @@
 .layout {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .menu {
-    flex: none;
+  flex: none;
 }
 
 .menu-spacer {
-    flex: 1 1 auto;
+  flex: 1 1 auto;
 }
 
 .content {
-    flex: 1;
-    height: 100%;
+  flex: 1;
+  height: 100%;
 }
 
 .mat-toolbar {
-    min-height: 50px !important;
-    height: 50px !important;
+  min-height: 50px !important;
+  height: 50px !important;
 }
 
 .mat-toolbar.mat-primary {
-    background: rgb(242, 242, 242);
-    color: rgb(24, 29, 31);
+  background: rgb(242, 242, 242);
+  color: rgb(24, 29, 31);
 }

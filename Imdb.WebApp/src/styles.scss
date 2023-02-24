@@ -1,7 +1,19 @@
-@import "../node_modules/@angular/material/prebuilt-themes/indigo-pink.css";
+html,
+body,
+main {
+  height: 100%;
+}
 
-@import "../node_modules/ag-grid-community/styles/ag-grid.css";
-@import "../node_modules/ag-grid-community/styles/ag-theme-alpine.css";
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
-html, body, main { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.unselectable {
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
