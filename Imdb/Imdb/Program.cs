@@ -41,7 +41,20 @@ var app = builder.Build();
 app.UseExceptionHandler("/exception");
 
 app.UseDefaultFiles();
-app.UseStaticFiles();
+app.UseStaticFiles(new StaticFileOptions
+{
+    OnPrepareResponse = context =>
+    {
+        if (context.File.Name == "index.html" || context.File.Name == "appsettings.json")
+        {
+            var headers = context.Context.Response.Headers;
+
+            headers.CacheControl = "no-cache, no-store, must-revalidate";
+            headers.Expires = "0";
+            headers.Pragma = "no-cache";
+        }
+    },
+});
 
 app.UseCors();
 
