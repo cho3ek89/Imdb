@@ -27,7 +27,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3.6.0
         with:
-          node-version: '19.x'
+          node-version: '20.x'
 
       - name: Build Imdb
         run: dotnet publish 'Imdb/Imdb/Imdb.csproj' -o 'binaries/Imdb' -c 'Release' -r '${{ matrix.runtime }}' -v 'normal' --self-contained true -p:PublishReadyToRunComposite=true -p:Version=${{ env.version }}
