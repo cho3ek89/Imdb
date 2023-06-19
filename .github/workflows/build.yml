@@ -29,13 +29,19 @@ jobs:
         with:
           node-version: '20.x'
 
-      - name: Build Imdb
-        run: dotnet publish 'Imdb/Imdb/Imdb.csproj' -o 'binaries/Imdb' -c 'Release' -r '${{ matrix.runtime }}' -v 'normal' --self-contained true -p:PublishReadyToRunComposite=true -p:Version=${{ env.version }}
+      - name: Build Imdb solution
+        run: dotnet build 'Imdb/Imdb.sln' -c 'Release' -v 'normal'
 
-      - name: Build Imdb.Loader
-        run: dotnet publish 'Imdb/Imdb.Loader/Imdb.Loader.csproj' -o 'binaries/Imdb.Loader' -c 'Release' -r '${{ matrix.runtime }}' -v 'normal' --self-contained true -p:PublishReadyToRunComposite=true -p:Version=${{ env.version }}
+      - name: Run Imdb solution tests
+        run: dotnet test 'Imdb/Imdb.sln' -c 'Release' -v 'normal' --no-build
 
-      - name: Build Imdb.WebApp
+      - name: Publish Imdb API
+        run: dotnet publish 'Imdb/Imdb/Imdb.csproj' -o 'binaries/Imdb' -c 'Release' -r '${{ matrix.runtime }}' -v 'normal' --self-contained -p:PublishReadyToRunComposite=true -p:Version=${{ env.version }}
+
+      - name: Publish Imdb.Loader
+        run: dotnet publish 'Imdb/Imdb.Loader/Imdb.Loader.csproj' -o 'binaries/Imdb.Loader' -c 'Release' -r '${{ matrix.runtime }}' -v 'normal' --self-contained -p:PublishReadyToRunComposite=true -p:Version=${{ env.version }}
+
+      - name: Build Imdb Web Application
         run: |
           cd Imdb.WebApp
           npm ci
@@ -47,7 +53,7 @@ jobs:
           # Updating database and logging setting of Imdb project.
           cd binaries/Imdb
           cat appsettings.json | \
-          jq '.ConnectionStrings.ImDb = "Data Source=../Databases/imdb.db3;"' | \
+          jq '.ConnectionStrings.ImDb = "Data Source=../Databases/imdb.db3;Pooling=False;"' | \
           jq '.Serilog.MinimumLevel.Default = "Information"' | \
           jq '.Serilog.MinimumLevel.Override = { "Microsoft.EntityFrameworkCore.Database.Command": "Warning" }' | \
           jq '(.Serilog.WriteTo[] | select(.Name == "File") | .Args.path) |= "../Logs/Imdb.txt"' \
@@ -57,7 +63,7 @@ jobs:
           cd ../Imdb.Loader
           cat appsettings.json | \
           jq '.DownloadSettings.DownloadLocation = "../.DownloadedImdb"' | \
-          jq '.ConnectionStrings.ImDb = "Data Source=../Databases/imdb.db3;"' | \
+          jq '.ConnectionStrings.ImDb = "Data Source=../Databases/imdb.db3;Pooling=False;"' | \
           jq '.Serilog.MinimumLevel.Default = "Information"' | \
           jq '.Serilog.MinimumLevel.Override = { "Microsoft.EntityFrameworkCore.Database.Command": "Warning" }' | \
           jq '(.Serilog.WriteTo[] | select(.Name == "File") | .Args.path) |= "../Logs/Imdb.Loader.txt"' \

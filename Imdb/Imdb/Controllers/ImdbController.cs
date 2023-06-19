@@ -15,5 +15,5 @@ public abstract class ImdbController<T> : ODataController where T : class
     }
 
     [EnableQuery]
-    public IQueryable<T> Get() => context.Set<T>().AsQueryable();
+    public virtual IQueryable<T> Get() => context.Set<T>().AsQueryable();
 }

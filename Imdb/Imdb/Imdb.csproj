@@ -26,4 +26,8 @@
 		<ProjectReference Include="..\Imdb.Common\Imdb.Common.csproj" />
 	</ItemGroup>
 
+	<ItemGroup>
+		<InternalsVisibleTo Include="Imdb.Tests" />
+	</ItemGroup>
+
 </Project>

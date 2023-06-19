@@ -8,7 +8,6 @@ using Imdb.Common.Models;
 using Imdb.Loader.Models;
 
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 using System.Globalization;
@@ -36,7 +35,7 @@ public class ImdbRepository : IImdbRepository
     public async Task UpdateDatabase(ImdbFiles filesToLoad, CancellationToken cancellationToken)
     {
         logger?.LogInformation("Creating database if missing.");
-        context.Database.EnsureCreated();
+        await context.Database.EnsureCreatedAsync(cancellationToken);
 
         logger?.LogInformation("Updating database started.");
 

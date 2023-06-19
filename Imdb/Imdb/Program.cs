@@ -61,3 +61,7 @@ app.UseCors();
 app.MapControllers();
 
 app.Run();
+
+// Make the implicit Program class public so test project
+// classes (which in XUnit must be public) can access it.
+public partial class Program { }

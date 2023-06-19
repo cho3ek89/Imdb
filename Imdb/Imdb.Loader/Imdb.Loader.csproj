@@ -35,4 +35,8 @@
 		</None>
 	</ItemGroup>
 
+	<ItemGroup>
+		<InternalsVisibleTo Include="Imdb.Loader.Tests" />
+	</ItemGroup>
+
 </Project>

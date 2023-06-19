@@ -8,6 +8,10 @@
 /Imdb/Imdb.Common/obj/
 /Imdb/Imdb.Loader/bin/
 /Imdb/Imdb.Loader/obj/
+/Imdb/Tests/Imdb.Loader.Tests/bin/
+/Imdb/Tests/Imdb.Loader.Tests/obj/
+/Imdb/Tests/Imdb.Tests/bin/
+/Imdb/Tests/Imdb.Tests/obj/
 
 # JS
 /Imdb.WebApp/.angular
