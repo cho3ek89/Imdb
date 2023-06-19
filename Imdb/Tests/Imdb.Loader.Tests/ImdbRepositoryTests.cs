@@ -199,7 +199,7 @@ public class ImdbRepositoryTests : IDisposable
     private DbContextOptions<ImdbContext> GetImdbContextOptions() =>
         new DbContextOptionsBuilder<ImdbContext>()
             .UseSqlite($@"Data Source={workingDirectory}/imdb.db3;Pooling=False;")
-            .UseQueryTrackingBehavior(QueryTrackingBehavior.TrackAll) //NoTracking
+            .UseQueryTrackingBehavior(QueryTrackingBehavior.TrackAll)
             .ReplaceService<IRelationalCommandBuilderFactory, SqliteRelationalCommandBuilderFactory>()
             .Options;
 
