@@ -205,12 +205,12 @@ public class ImdbRepositoryTests : IDisposable
 
     private static ImdbFiles GetImdbFiles() => new()
     {
-        NameBasics = @"ImdbFiles\name.basics.tsv",
-        TitleAkas = @"ImdbFiles\title.akas.tsv",
-        TitleBasics = @"ImdbFiles\title.basics.tsv",
-        TitleCrew = @"ImdbFiles\title.crew.tsv",
-        TitleEpisode = @"ImdbFiles\title.episode.tsv",
-        TitlePrincipals = @"ImdbFiles\title.principals.tsv",
-        TitleRatings = @"ImdbFiles\title.ratings.tsv",
+        NameBasics = @"ImdbFiles/name.basics.tsv",
+        TitleAkas = @"ImdbFiles/title.akas.tsv",
+        TitleBasics = @"ImdbFiles/title.basics.tsv",
+        TitleCrew = @"ImdbFiles/title.crew.tsv",
+        TitleEpisode = @"ImdbFiles/title.episode.tsv",
+        TitlePrincipals = @"ImdbFiles/title.principals.tsv",
+        TitleRatings = @"ImdbFiles/title.ratings.tsv",
     };
 }
