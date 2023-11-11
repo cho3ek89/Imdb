@@ -45,10 +45,10 @@ export class AgGridOptionsService {
       defaultColDef: {
         filter: true,
         filterParams: {
-          alwaysShowBothConditions: false, //important
-          buttons: ['clear', 'apply'],
+          buttons: ['clear', 'apply' ],
           closeOnApply: true,
-          suppressAndOrCondition: true, //important
+          maxNumConditions: 1, //important
+          numAlwaysVisibleConditions: 1, //important
         },
         resizable: true,
         sortable: true,

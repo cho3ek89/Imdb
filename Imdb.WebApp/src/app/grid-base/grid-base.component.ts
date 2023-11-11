@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
@@ -11,6 +12,10 @@ import { DataService } from '../services/data.service';
 
 @Component({
   selector: 'grid-base',
+  standalone: true,
+  imports: [
+    CommonModule, 
+  ],
   template: ``,
 })
 export abstract class GridBaseComponent {

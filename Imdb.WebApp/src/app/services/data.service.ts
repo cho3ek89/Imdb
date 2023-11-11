@@ -53,7 +53,7 @@ export class DataService {
     Object.keys(filterModel).forEach(property => {
       let filterParam = Reflect.get(filterModel, property);
 
-      console.warn(filterParam);
+      console.debug(filterParam);
 
       let value = filterParam.filterType == 'date'
         ? filterParam.dateFrom
