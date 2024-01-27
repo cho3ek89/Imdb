@@ -5,14 +5,9 @@ namespace Imdb.Controllers;
 
 [ApiController]
 [ApiExplorerSettings(IgnoreApi = true)]
-public class ExceptionController : ControllerBase
+public class ExceptionController(ILogger<ExceptionController> logger) : ControllerBase
 {
-    private readonly ILogger<ExceptionController> logger;
-
-    public ExceptionController(ILogger<ExceptionController> logger)
-    {
-        this.logger = logger;
-    }
+    private readonly ILogger<ExceptionController> logger = logger;
 
     [Route("/exception")]
     public IActionResult HandleException()

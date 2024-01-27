@@ -6,17 +6,13 @@ using Microsoft.Extensions.Options;
 
 namespace Imdb.Loader.Providers
 {
-    public class ImdbFilesProvider : IImdbFilesProvider
+    public class ImdbFilesProvider(
+        IOptions<DownloadSettings> settings, 
+        ILogger<ImdbLoadingService> logger) : IImdbFilesProvider
     {
-        private readonly DownloadSettings settings;
+        private readonly DownloadSettings settings = settings.Value;
 
-        private readonly ILogger<ImdbLoadingService> logger;
-
-        public ImdbFilesProvider(IOptions<DownloadSettings> settings, ILogger<ImdbLoadingService> logger)
-        {
-            this.settings = settings.Value;
-            this.logger = logger;
-        }
+        private readonly ILogger<ImdbLoadingService> logger = logger;
 
         public async Task DeleteDownloadDirectory()
         {

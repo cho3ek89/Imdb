@@ -4,11 +4,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Imdb.Common.DbContexts;
 
-public class ImdbContext : DbContext
+public class ImdbContext(DbContextOptions<ImdbContext> options) : DbContext(options)
 {
-    public ImdbContext(DbContextOptions<ImdbContext> options)
-        : base(options) { }
-
     public DbSet<NameBasics> NameBasics { get; set; }
 
     public DbSet<TitleAkas> TitleAkas { get; set; }

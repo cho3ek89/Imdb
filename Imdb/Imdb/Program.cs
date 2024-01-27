@@ -13,6 +13,8 @@ builder.Host.UseSerilog((context, options) =>
     options.ReadFrom.Configuration(context.Configuration);
 });
 
+builder.Services.AddHealthChecks();
+
 builder.Services.AddControllers()
 .AddOData(options =>
 {
@@ -57,6 +59,8 @@ app.UseStaticFiles(new StaticFileOptions
 });
 
 app.UseCors();
+
+app.MapHealthChecks("/health");
 
 app.MapControllers();
 

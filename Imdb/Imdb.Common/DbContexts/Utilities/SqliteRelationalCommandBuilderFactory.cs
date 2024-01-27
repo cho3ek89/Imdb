@@ -2,11 +2,8 @@
 
 namespace Imdb.Common.DbContexts.Utilities
 {
-    public class SqliteRelationalCommandBuilderFactory : RelationalCommandBuilderFactory
+    public class SqliteRelationalCommandBuilderFactory(RelationalCommandBuilderDependencies dependencies) : RelationalCommandBuilderFactory(dependencies)
     {
-        public SqliteRelationalCommandBuilderFactory(RelationalCommandBuilderDependencies dependencies)
-            : base(dependencies) { }
-
         public override IRelationalCommandBuilder Create() => new SqliteRelationalCommandBuilder(Dependencies);
     }
 }

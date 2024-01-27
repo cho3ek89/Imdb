@@ -1,0 +1,34 @@
+@apiUrl = https://localhost:5001
+@ImDbRoutePrefix = ImDb
+
+GET {{apiUrl}}/{{ImDbRoutePrefix}}/NameBasics?$top=10
+
+###
+
+GET {{apiUrl}}/{{ImDbRoutePrefix}}/TitleAkas?$top=10
+
+###
+
+GET {{apiUrl}}/{{ImDbRoutePrefix}}/TitleBasics?$top=10
+
+###
+
+GET {{apiUrl}}/{{ImDbRoutePrefix}}/TitleCrew?$top=10
+
+###
+
+GET {{apiUrl}}/{{ImDbRoutePrefix}}/TitleEpisode?$top=10
+
+###
+
+GET {{apiUrl}}/{{ImDbRoutePrefix}}/TitlePrincipals?$top=10
+
+###
+
+GET {{apiUrl}}/{{ImDbRoutePrefix}}/TitleRating?$top=10
+
+###
+
+GET {{apiUrl}}/health
+
+###

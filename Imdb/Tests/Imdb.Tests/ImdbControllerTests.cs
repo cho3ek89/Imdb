@@ -15,13 +15,9 @@ using Xunit;
 
 namespace Imdb.Tests;
 
-public class ImdbControllerTests : IClassFixture<WebApplicationFactory<Program>>
+public class ImdbControllerTests(WebApplicationFactory<Program> webApplicationFactory) : IClassFixture<WebApplicationFactory<Program>>
 {
-    private readonly WebApplicationFactory<Program> webApplicationFactory;
-
-    public ImdbControllerTests(WebApplicationFactory<Program> webApplicationFactory)
-    {
-        this.webApplicationFactory = webApplicationFactory.WithWebHostBuilder(builder =>
+    private readonly WebApplicationFactory<Program> webApplicationFactory = webApplicationFactory.WithWebHostBuilder(builder =>
         {
             builder.ConfigureTestServices(services =>
             {
@@ -52,7 +48,6 @@ public class ImdbControllerTests : IClassFixture<WebApplicationFactory<Program>>
                 });
             });
         });
-    }
 
     [Fact]
     public async Task NameBasicsEndpointWorks() => await TestImdbEndpoint(GetNameBasics());

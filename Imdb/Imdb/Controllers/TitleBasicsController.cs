@@ -3,7 +3,6 @@ using Imdb.Common.Models;
 
 namespace Imdb.Controllers;
 
-public class TitleBasicsController : ImdbController<TitleBasics>
+public class TitleBasicsController(ImdbContext context) : ImdbController<TitleBasics>(context)
 {
-    public TitleBasicsController(ImdbContext context) : base(context) { }
 }

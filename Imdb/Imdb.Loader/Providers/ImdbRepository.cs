@@ -14,20 +14,15 @@ using System.Globalization;
 
 namespace Imdb.Loader.Providers;
 
-public class ImdbRepository : IImdbRepository
+public class ImdbRepository(
+    ImdbContext context, IOptions<DatabaseSettings> settings, 
+    ILogger<ImdbRepository> logger) : IImdbRepository
 {
-    private readonly ImdbContext context;
+    private readonly ImdbContext context = context;
 
-    private readonly DatabaseSettings settings;
+    private readonly DatabaseSettings settings = settings.Value;
 
-    private readonly ILogger<ImdbRepository> logger;
-
-    public ImdbRepository(ImdbContext context, IOptions<DatabaseSettings> settings, ILogger<ImdbRepository> logger)
-    {
-        this.context = context;
-        this.settings = settings.Value;
-        this.logger = logger;
-    }
+    private readonly ILogger<ImdbRepository> logger = logger;
 
     public async Task UpdateDatabase(ImdbFiles filesToLoad) =>
         await UpdateDatabase(filesToLoad, CancellationToken.None);
@@ -77,7 +72,7 @@ public class ImdbRepository : IImdbRepository
 
         logger?.LogInformation("Updating {tableName} table started.", tableName);
 
-        await context.Set<T>().BatchDeleteAsync(cancellationToken);
+        await context.Set<T>().ExecuteDeleteAsync(cancellationToken);
 
         var records = new List<T>();
         int recordsCount = 0;

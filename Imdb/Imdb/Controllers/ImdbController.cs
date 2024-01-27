@@ -5,14 +5,9 @@ using Microsoft.AspNetCore.OData.Routing.Controllers;
 
 namespace Imdb.Controllers;
 
-public abstract class ImdbController<T> : ODataController where T : class
+public abstract class ImdbController<T>(ImdbContext context) : ODataController where T : class
 {
-    protected readonly ImdbContext context;
-
-    public ImdbController(ImdbContext context)
-    {
-        this.context = context;
-    }
+    protected readonly ImdbContext context = context;
 
     [EnableQuery]
     public virtual IQueryable<T> Get() => context.Set<T>().AsQueryable();

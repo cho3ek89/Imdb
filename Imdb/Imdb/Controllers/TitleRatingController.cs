@@ -3,7 +3,6 @@ using Imdb.Common.Models;
 
 namespace Imdb.Controllers;
 
-public class TitleRatingController : ImdbController<TitleRating>
+public class TitleRatingController(ImdbContext context) : ImdbController<TitleRating>(context)
 {
-    public TitleRatingController(ImdbContext context) : base(context) { }
 }

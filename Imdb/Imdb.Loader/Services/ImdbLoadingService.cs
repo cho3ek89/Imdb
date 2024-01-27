@@ -2,20 +2,16 @@
 
 namespace Imdb.Loader.Services;
 
-public class ImdbLoadingService : IImdbLoadingService
+public class ImdbLoadingService(
+    IImdbFilesProvider imdbFilesProvider, 
+    IImdbRepository imdbRepository, 
+    ILogger<ImdbLoadingService> logger) : IImdbLoadingService
 {
-    private readonly IImdbFilesProvider imdbFilesProvider;
+    private readonly IImdbFilesProvider imdbFilesProvider = imdbFilesProvider;
 
-    private readonly IImdbRepository imdbRepository;
+    private readonly IImdbRepository imdbRepository = imdbRepository;
 
-    private readonly ILogger<ImdbLoadingService> logger;
-
-    public ImdbLoadingService(IImdbFilesProvider imdbFilesProvider, IImdbRepository imdbRepository, ILogger<ImdbLoadingService> logger)
-    {
-        this.imdbFilesProvider = imdbFilesProvider;
-        this.imdbRepository = imdbRepository;
-        this.logger = logger;
-    }
+    private readonly ILogger<ImdbLoadingService> logger = logger;
 
     public async Task UpdateDatabase() =>
         await UpdateDatabase(CancellationToken.None);
