@@ -4,7 +4,7 @@ import { Component, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
 
 import { AgGridAngular } from 'ag-grid-angular';
-import { ColDef, GridOptions, IGetRowsParams } from 'ag-grid-community';
+import { ColDef, GridOptions, GridReadyEvent, IGetRowsParams } from 'ag-grid-community';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 import { AgGridOptionsService } from '../services/ag-grid-options.service';
@@ -32,22 +32,23 @@ export abstract class GridBaseComponent {
 
   protected abstract getGridColumnDefs(): ColDef[];
 
-  onGridReady(params: any) {
+  onGridReady(onGridReady: GridReadyEvent) {
     var datasource = {
       getRows: (params: IGetRowsParams) => {
-        this.gridOptions.api?.showLoadingOverlay();
+        onGridReady.api.showLoadingOverlay();
 
         this.getData(params).subscribe({
           next: result => {
             params.successCallback(result['value'], result['@odata.count']);
 
-            if (result.count == 0)
-              this.gridOptions.api?.showNoRowsOverlay();
+            if (result['@odata.count'] == 0)
+              onGridReady.api.showNoRowsOverlay();
             else
-              this.gridOptions.api?.hideOverlay();
+              onGridReady.api.hideOverlay();
           },
           error: (error: HttpErrorResponse) => {
-            this.gridOptions.api?.showNoRowsOverlay();
+            onGridReady.api.hideOverlay();
+            params.failCallback();
 
             console.error(error.error);
             this.snackBar.open(
@@ -59,6 +60,6 @@ export abstract class GridBaseComponent {
       }
     }
 
-    params.api.setDatasource(datasource);
+    onGridReady.api.setGridOption('datasource', datasource);
   }
 }
