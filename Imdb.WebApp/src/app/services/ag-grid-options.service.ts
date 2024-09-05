@@ -8,7 +8,7 @@ import { GridOptions } from 'ag-grid-community';
 export class AgGridOptionsService {
   getGridOptions(): GridOptions {
     return {
-      cacheBlockSize: 90,
+      cacheBlockSize: 100,
       cacheOverflowSize: 2,
       columnTypes: {
         boolean: {
@@ -56,7 +56,8 @@ export class AgGridOptionsService {
       infiniteInitialRowCount: 0,
       maxConcurrentDatasourceRequests: 2,
       pagination: true,
-      paginationPageSize: 90,
+      paginationPageSize: 100,
+      paginationPageSizeSelector: [100, 200, 300],
       rowModelType: 'infinite',
     };
   }

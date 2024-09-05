@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { IGetRowsParams } from 'ag-grid-community';
-import buildQuery from 'odata-query';
+import buildQuery, { OrderByOptions } from 'odata-query';
 import f from 'odata-filter-builder';
 
 import { ConfigService } from './config.service';
@@ -41,7 +41,8 @@ export class DataService {
   private getQuery(params: IGetRowsParams, count: boolean = true): string {
     let top = params.endRow - params.startRow;
     let skip = params.startRow;
-    let orderBy = params.sortModel.map((m: { colId: string; sort: string; }) => `${m.colId} ${m.sort}`);
+    let orderBy = params.sortModel.map((m: { colId: string; sort: string; }) => 
+      `${m.colId} ${m.sort}` as OrderByOptions<string>);
     let filter = this.getFilter(params.filterModel);
 
     return buildQuery({ top, skip, orderBy, filter, count });
