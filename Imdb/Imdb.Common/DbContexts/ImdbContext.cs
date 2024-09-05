@@ -29,7 +29,7 @@ public class ImdbContext(DbContextOptions<ImdbContext> options) : DbContext(opti
             e.Property(p => p.NameId)
                 .ValueGeneratedNever();
             e.Property(p => p.Name)
-                .IsRequired();
+                .IsRequired(false); // It used to be not null in the past, they must have changed something...
         });
 
         modelBuilder.Entity<TitleAkas>(e =>
