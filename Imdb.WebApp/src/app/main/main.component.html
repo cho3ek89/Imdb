@@ -1,43 +1,43 @@
 <div class="layout">
-    <div class="menu">
-        <mat-toolbar>
-            <button mat-icon-button [matMenuTriggerFor]="mainMenu" aria-label="Menu">
-                <mat-icon>menu</mat-icon>
-            </button>
-            <mat-menu #mainMenu="matMenu">
-                <button mat-menu-item routerLink="name-basics">
-                    <span>Name Basics</span>
-                </button>
-                <button mat-menu-item routerLink="title-akas">
-                    <span>Title Akas</span>
-                </button>
-                <button mat-menu-item routerLink="title-basics">
-                    <span>Title Basics</span>
-                </button>
-                <button mat-menu-item routerLink="title-crew">
-                    <span>Title Crew</span>
-                </button>
-                <button mat-menu-item routerLink="title-episodes">
-                    <span>Title Episodes</span>
-                </button>
-                <button mat-menu-item routerLink="title-principals">
-                    <span>Title Principals</span>
-                </button>
-                <button mat-menu-item routerLink="title-ratings">
-                    <span>Title Ratings</span>
-                </button>
-            </mat-menu>
+  <div class="menu">
+    <mat-toolbar>
+      <button mat-icon-button [matMenuTriggerFor]="mainMenu" aria-label="Menu">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <mat-menu #mainMenu="matMenu">
+        <button mat-menu-item routerLink="name-basics">
+          <span>Name Basics</span>
+        </button>
+        <button mat-menu-item routerLink="title-akas">
+          <span>Title Akas</span>
+        </button>
+        <button mat-menu-item routerLink="title-basics">
+          <span>Title Basics</span>
+        </button>
+        <button mat-menu-item routerLink="title-crew">
+          <span>Title Crew</span>
+        </button>
+        <button mat-menu-item routerLink="title-episodes">
+          <span>Title Episodes</span>
+        </button>
+        <button mat-menu-item routerLink="title-principals">
+          <span>Title Principals</span>
+        </button>
+        <button mat-menu-item routerLink="title-ratings">
+          <span>Title Ratings</span>
+        </button>
+      </mat-menu>
 
-            <span class="unselectable">IMDb</span>
-            <span class="menu-spacer"></span>
+      <span class="unselectable">IMDb</span>
+      <span class="menu-spacer"></span>
 
-            <a mat-icon-button href="https://github.com/cho3ek89/Imdb" target="_blank">
-                <mat-icon>info</mat-icon>
-            </a>
-        </mat-toolbar>
-    </div>
+      <a mat-icon-button href="https://github.com/cho3ek89/Imdb" target="_blank">
+        <mat-icon>info</mat-icon>
+      </a>
+    </mat-toolbar>
+  </div>
 
-    <div class="content">
-        <router-outlet></router-outlet>
-    </div>
+  <div class="content">
+    <router-outlet></router-outlet>
+  </div>
 </div>
