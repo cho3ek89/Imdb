@@ -3,8 +3,8 @@
 namespace Imdb.Loader.Services;
 
 public class ImdbLoadingService(
-    IImdbFilesProvider imdbFilesProvider, 
-    IImdbRepository imdbRepository, 
+    IImdbFilesProvider imdbFilesProvider,
+    IImdbRepository imdbRepository,
     ILogger<ImdbLoadingService> logger) : IImdbLoadingService
 {
     private readonly IImdbFilesProvider imdbFilesProvider = imdbFilesProvider;

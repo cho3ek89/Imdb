@@ -1,7 +1,7 @@
 ﻿namespace Imdb.Loader.Services;
 
 public class ImdbLoadingLauncher(
-    IHostApplicationLifetime hostAppLifetime, 
+    IHostApplicationLifetime hostAppLifetime,
     IImdbLoadingService loadingService) : BackgroundService
 {
     private readonly IHostApplicationLifetime hostAppLifetime = hostAppLifetime;

@@ -15,7 +15,8 @@ using System.Globalization;
 namespace Imdb.Loader.Providers;
 
 public class ImdbRepository(
-    ImdbContext context, IOptions<DatabaseSettings> settings, 
+    ImdbContext context,
+    IOptions<DatabaseSettings> settings,
     ILogger<ImdbRepository> logger) : IImdbRepository
 {
     private readonly ImdbContext context = context;

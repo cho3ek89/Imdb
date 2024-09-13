@@ -32,7 +32,7 @@ public static class FileHelper
         await responseStream.CopyToAsync(writeStream, BufferSize, cancellationToken);
     }
 
-    public static async Task DecompressGZipArchive(string fileToDecompress) => 
+    public static async Task DecompressGZipArchive(string fileToDecompress) =>
         await DecompressGZipArchive(fileToDecompress, CancellationToken.None);
 
     public static async Task DecompressGZipArchive(string fileToDecompress, CancellationToken cancellationToken)

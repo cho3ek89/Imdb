@@ -7,7 +7,7 @@ using Microsoft.Extensions.Options;
 namespace Imdb.Loader.Providers
 {
     public class ImdbFilesProvider(
-        IOptions<DownloadSettings> settings, 
+        IOptions<DownloadSettings> settings,
         ILogger<ImdbLoadingService> logger) : IImdbFilesProvider
     {
         private readonly DownloadSettings settings = settings.Value;
