@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
@@ -21,11 +22,7 @@ public class ImdbControllerTests(WebApplicationFactory<Program> webApplicationFa
         {
             builder.ConfigureTestServices(services =>
             {
-                services.RemoveAll<ImdbContext>();
-                services.RemoveAll<DbContextOptions>();
-
-                foreach (var option in services.Where(s => s.ServiceType.BaseType == typeof(DbContextOptions)).ToList())
-                    services.Remove(option);
+                services.RemoveAll<IDbContextOptionsConfiguration<ImdbContext>>();
 
                 services.AddDbContextPool<ImdbContext>(options =>
                 {
@@ -71,7 +68,7 @@ public class ImdbControllerTests(WebApplicationFactory<Program> webApplicationFa
     public async Task TitleRatingEndpointWorks() => await TestImdbEndpoint(GetTitleRating());
 
     private async Task TestImdbEndpoint<T>(T expectedResults) where T : class
-        => await TestImdbEndpoint(new[] { expectedResults });
+        => await TestImdbEndpoint([expectedResults]);
 
     private async Task TestImdbEndpoint<T>(T[] expectedResults) where T : class
     {

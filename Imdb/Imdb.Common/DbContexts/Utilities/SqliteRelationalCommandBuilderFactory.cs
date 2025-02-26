@@ -1,9 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore.Storage;
 
-namespace Imdb.Common.DbContexts.Utilities
+namespace Imdb.Common.DbContexts.Utilities;
+
+public class SqliteRelationalCommandBuilderFactory(RelationalCommandBuilderDependencies dependencies) : RelationalCommandBuilderFactory(dependencies)
 {
-    public class SqliteRelationalCommandBuilderFactory(RelationalCommandBuilderDependencies dependencies) : RelationalCommandBuilderFactory(dependencies)
-    {
-        public override IRelationalCommandBuilder Create() => new SqliteRelationalCommandBuilder(Dependencies);
-    }
+    public override IRelationalCommandBuilder Create() => new SqliteRelationalCommandBuilder(Dependencies);
 }
