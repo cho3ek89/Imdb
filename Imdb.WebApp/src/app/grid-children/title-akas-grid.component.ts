@@ -12,7 +12,6 @@ import { GridBaseComponent } from '../grid-base/grid-base.component';
 
 @Component({
   selector: 'title-akas-grid',
-  standalone: true,
   imports: [
     AgGridModule, 
     CommonModule, 

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { RouterLink, RouterOutlet } from '@angular/router';
 
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
@@ -9,7 +9,6 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 
 @Component({
   selector: 'main',
-  standalone: true,
   imports: [
     CommonModule, 
     MatButtonModule, 
@@ -17,8 +16,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatMenuModule, 
     MatToolbarModule, 
     RouterLink, 
-    RouterLinkActive, 
-    RouterOutlet, 
+    RouterOutlet,
   ],
   templateUrl: 'main.component.html',
   styleUrls: ['main.component.scss'],

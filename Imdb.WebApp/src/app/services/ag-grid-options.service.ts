@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { GridOptions } from 'ag-grid-community';
+import { GridOptions, themeAlpine } from 'ag-grid-community';
 
 @Injectable({
   providedIn: 'root'
@@ -53,12 +53,13 @@ export class AgGridOptionsService {
         resizable: true,
         sortable: true,
       },
-      infiniteInitialRowCount: 0,
+      infiniteInitialRowCount: 1,
       maxConcurrentDatasourceRequests: 2,
       pagination: true,
       paginationPageSize: 100,
       paginationPageSizeSelector: [100, 200, 300],
       rowModelType: 'infinite',
+      theme: themeAlpine,
     };
   }
 }

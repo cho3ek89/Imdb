@@ -10,9 +10,11 @@ export class ConfigService {
 
   constructor(private http: HttpClient) { }
 
-  getConfiguration = () => this.config;
+  public getConfiguration() { 
+    return this.config;
+  }
 
-  async loadConfiguration(location: string) {
+  public async loadConfiguration(location: string) {
     this.config = await firstValueFrom(this.http.get(location));
   }
 }

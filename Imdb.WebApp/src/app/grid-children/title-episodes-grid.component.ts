@@ -12,9 +12,8 @@ import { GridBaseComponent } from '../grid-base/grid-base.component';
 
 @Component({
   selector: 'title-episodes-grid',
-  standalone: true,
   imports: [
-     AgGridModule, 
+    AgGridModule, 
     CommonModule, 
   ],
   templateUrl: './../grid-base/grid-base.component.html',

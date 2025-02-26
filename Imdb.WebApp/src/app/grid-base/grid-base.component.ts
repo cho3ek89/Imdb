@@ -12,7 +12,6 @@ import { DataService } from '../services/data.service';
 
 @Component({
   selector: 'grid-base',
-  standalone: true,
   imports: [
     CommonModule, 
   ],
@@ -35,7 +34,7 @@ export abstract class GridBaseComponent {
   onGridReady(onGridReady: GridReadyEvent) {
     var datasource = {
       getRows: (params: IGetRowsParams) => {
-        onGridReady.api.showLoadingOverlay();
+        onGridReady.api.setGridOption('loading', true);
 
         this.getData(params).subscribe({
           next: result => {
@@ -44,10 +43,10 @@ export abstract class GridBaseComponent {
             if (result['@odata.count'] == 0)
               onGridReady.api.showNoRowsOverlay();
             else
-              onGridReady.api.hideOverlay();
+            onGridReady.api.setGridOption('loading', false);
           },
           error: (error: HttpErrorResponse) => {
-            onGridReady.api.hideOverlay();
+            onGridReady.api.setGridOption('loading', false);
             params.failCallback();
 
             console.error(error.error);
